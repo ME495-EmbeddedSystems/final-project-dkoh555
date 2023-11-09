@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<launch>
+    <arg name="hardware_type" default="fake" />
+
+    <group if="$(eval '\'$(var hardware_type)\' == \'fake\'')">
+        <include file="$(find-pkg-share franka_moveit_config)/launch/moveit.launch.py">
+            <arg name="robot_ip" value="dont-care" />
+            <arg name="use_fake_hardware" value="true" />
+        </include>
+
+        <node pkg="write_letters" exec="writer" name="writer">
+            <!-- <param from="$(find-pkg-share pickmeup)/fake.yaml" /> -->
+            <param name="x" value="0.5" />
+            <param name="y" value="0.0" />
+            <param name="z" value="0.05" />
+        </node>
+    </group>
+
+    <group if="$(eval '\'$(var hardware_type)\' == \'real\'')">
+        <include file="$(find-pkg-share franka_moveit_config)/launch/rviz.launch.py">
+            <arg name="robot_ip" value="panda0.robot" />
+        </include>
+
+        <node pkg="pickmeup" exec="picker" name="picker">
+            <!-- <param from="$(find-pkg-share pickmeup)/real.yaml" /> -->
+            <param name="x" value="0.5" />
+            <param name="y" value="0.0" />
+            <param name="z" value="0.05" />
+            <param name="fake_mode" value="False" />
+        </node>
+    </group>
+
+</launch>
