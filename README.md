@@ -1,3 +1,10 @@
+### Use AprilTags
+
+Ensure you have:
+
+[RealSense ROS2](https://github.com/IntelRealSense/realsense-ros.git)
+
+
 Launch with
 
    ```
