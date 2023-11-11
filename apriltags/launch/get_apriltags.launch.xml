@@ -14,6 +14,13 @@
             <remap from="/image_rect" to="/camera/color/image_raw"/>
     </node>
 
+    
+
+    <include file="$(find-pkg-share franka_moveit_config)/launch/moveit.launch.py">
+        <arg name="robot_ip" value="dont-care" />
+        <arg name="use_fake_hardware" value="true" />
+    </include>
+
     <node pkg="rviz2" exec="rviz2" args="-d $(find-pkg-share apriltags)/view_apriltags.rviz"/>
 
 
