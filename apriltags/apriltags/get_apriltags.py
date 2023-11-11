@@ -10,18 +10,6 @@ from shape_msgs.msg import SolidPrimitive
 from .move_robot import MoveRobot
 from enum import Enum, auto
 
-import rclpy
-from rclpy.node import Node
-from tf2_ros import TransformBroadcaster, TransformException
-from tf2_ros.static_transform_broadcaster import StaticTransformBroadcaster
-from tf2_ros.transform_listener import TransformListener
-from tf2_ros.buffer import Buffer
-from geometry_msgs.msg import Quaternion, Pose, TransformStamped, Point
-from shape_msgs.msg import SolidPrimitive
-from sensor_msgs.msg import Image, CameraInfo
-from message_filters import Subscriber, TimeSynchronizer
-from enum import Enum, auto
-
 
 class State(Enum):
     WAITING = auto()
