@@ -468,7 +468,7 @@ class MoveRobot:
             shape: The shape of the box.
 
         """
-        self.node.get_logger().info("add_box")
+        self.node.get_logger().info("add_box", once=True)
         self.collision_object = CollisionObject()
         self.collision_object.header.stamp = self.node.get_clock().now().to_msg()
         self.collision_object.header.frame_id = "panda_link0"
