@@ -71,10 +71,10 @@ class GetAprilTags(Node):
                             f'Could not transform {"tag36h11:9"} to {"camera_link"}: {ex}', once=True)
                 return
                     
-            # pose_info = f"Position: {t.transform.translation.x, t.transform.translation.y, t.transform.translation.z}\n"\
-            #             f"Orientation: {t.transform.rotation.x, t.transform.rotation.y, t.transform.rotation.z, t.transform.rotation.w}"
+            pose_info = f"Position: {t.transform.translation.x, t.transform.translation.y, t.transform.translation.z}\n"\
+                        f"Orientation: {t.transform.rotation.x, t.transform.rotation.y, t.transform.rotation.z, t.transform.rotation.w}"
 
-            # self.get_logger().info("\n" + pose_info + "\n")
+            self.get_logger().info("\n" + pose_info + "\n")
 
 
         elif self.state == State.ADD_BOX:
@@ -82,7 +82,7 @@ class GetAprilTags(Node):
             pose = Pose()
             pose.position.x = 0.0
             pose.position.y = 0.0
-            pose.position.z = 0.0
+            pose.position.z = 0.5
             pose.orientation = self.orientation
             size = [0.5, 1.0, 0.05]
             shape = SolidPrimitive(type=SolidPrimitive.BOX, dimensions=size)
