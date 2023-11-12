@@ -115,7 +115,7 @@ class Picker(Node):
         self.robot = MoveRobot(
             self, self.move_group_name, self.fake_mode, self.ee_frame_id
         )
-        
+
         # self.robot.tolerance = 1e-1
 
         self.posittion: Point = None
@@ -152,6 +152,7 @@ class Picker(Node):
         self.grasp_called = False
         self.points: list[Point] = None
         self.quats: list[Quaternion] = None
+        self.poses: list[Pose] = None
 
     def srv_path_callback(self, request, response):
         """
@@ -166,20 +167,25 @@ class Picker(Node):
         """
         self.points = request.points
         self.quats = []
+        self.poses = []
+
         for i in range(len(self.points)):
-            if i == 0:
-                self.quats.append(
-                    self.robot.angle_axis_to_quaternion(self.theta, self.rotation_axis)
-                )
-            elif i < len(self.points) - 1:
-                # self.quats.append(None)
-                self.quats.append(
-                    self.robot.angle_axis_to_quaternion(self.theta, self.rotation_axis)
+            # if i == 0:
+            #     quat = self.robot.angle_axis_to_quaternion(math.pi, [1.0, 0.0, 0.0])
+            if i < len(self.points) - 1:
+                quat = self.robot.angle_axis_to_quaternion(
+                    self.theta, self.rotation_axis
                 )
             else:
-                self.quats.append(
-                    self.robot.angle_axis_to_quaternion(math.pi, [1.0, 0.0, 0.0])
-                )
+                quat = self.robot.angle_axis_to_quaternion(math.pi, [1.0, 0.0, 0.0])
+
+            self.quats.append(quat)
+
+            pose = Pose()
+            pose.position = self.points[i]
+            pose.orientation = quat
+
+            self.poses.append(pose)
 
         self.pos_list = self.points
         self.ori_list = self.quats
@@ -205,32 +211,35 @@ class Picker(Node):
             if self.robot.state == MOVEROBOT_STATE.WAITING:
                 self.get_logger().info("In executable code")
                 self.get_logger().info("Publishing command no.%s" % self.comm_count)
-                self.robot.find_and_execute(
-                    point=self.pos_list[self.comm_count],
-                    quat=self.ori_list[self.comm_count],
-                )
+                # self.robot.find_and_execute(
+                #     point=self.pos_list[self.comm_count],
+                #     quat=self.ori_list[self.comm_count],
+                # )
+                self.robot.find_and_execute_cartesian(self.poses)
 
             elif self.robot.state == MOVEROBOT_STATE.DONE:
-                self.get_logger().info("Done moving arm")
-                self.comm_count += 1
-                self.get_logger().info("comm_count:%s" % self.comm_count)
-                if self.comm_count == 1 and not self.fake_mode:
-                    self.get_logger().info("Executing close gripper", once=True)
-                    self.state = State.GRIPPER
-                    self.robot.grasp()
-                elif self.comm_count == (len(self.pos_list) - 1) and not self.fake_mode:
-                    self.get_logger().info("Executing open gripper", once=True)
-                    self.state = State.GRIPPER
-                    self.robot.grasp()
-                elif self.comm_count < len(self.pos_list):
-                    self.get_logger().info("Executing next command", once=True)
-                    self.state = State.MOVEARM
-                    self.robot.state = MOVEROBOT_STATE.WAITING
-                    self.get_logger().info(f"{self.robot.state}")
-                else:
-                    self.comm_count = 0
-                    self.robot.state = MOVEROBOT_STATE.WAITING
-                    self.state = State.DONE
+                # self.get_logger().info("Done moving arm")
+                # self.comm_count += 1
+                # self.get_logger().info("comm_count:%s" % self.comm_count)
+                # if self.comm_count == 1 and not self.fake_mode:
+                #     self.get_logger().info("Executing close gripper", once=True)
+                #     self.state = State.GRIPPER
+                #     self.robot.grasp()
+                # elif self.comm_count == (len(self.pos_list) - 1) and not self.fake_mode:
+                #     self.get_logger().info("Executing open gripper", once=True)
+                #     self.state = State.GRIPPER
+                #     self.robot.grasp()
+                # elif self.comm_count < len(self.pos_list):
+                #     self.get_logger().info("Executing next command", once=True)
+                #     self.state = State.MOVEARM
+                #     self.robot.state = MOVEROBOT_STATE.WAITING
+                #     self.get_logger().info(f"{self.robot.state}")
+                # else:
+                #     self.comm_count = 0
+                #     self.robot.state = MOVEROBOT_STATE.WAITING
+                #     self.state = State.DONE
+                self.state = State.DONE
+                self.robot.starting_state = MOVEROBOT_STATE.WAITING
 
         elif self.state == State.GRIPPER:
             self.get_logger().info("Executing gripper command", once=True)
@@ -249,7 +258,7 @@ class Picker(Node):
                 pose.position.x = 0.1
                 pose.position.y = 0.0
                 pose.position.z = -0.15
-                size = [1.0, 0.6, 0.1]
+                size = [0.9, 0.6, 0.1]
                 shape = SolidPrimitive(type=SolidPrimitive.BOX, dimensions=size)
                 self.robot.add_box(name=name, pose=pose, shape=shape)
 
