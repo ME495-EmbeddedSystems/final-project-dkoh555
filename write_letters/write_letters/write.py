@@ -102,7 +102,7 @@ class Picker(Node):
         )
         self.declare_parameter(
             "rotation_axis",
-            [0.0, 1.0, 0.0],
+            [1.0, 0.0, 0.0],
             ParameterDescriptor(
                 description="Axis that the end effector will rotate around"
             ),
@@ -172,12 +172,16 @@ class Picker(Node):
         for i in range(len(self.points)):
             # if i == 0:
             #     quat = self.robot.angle_axis_to_quaternion(math.pi, [1.0, 0.0, 0.0])
-            if i < len(self.points) - 1:
-                quat = self.robot.angle_axis_to_quaternion(
-                    self.theta, self.rotation_axis
-                )
-            else:
-                quat = self.robot.angle_axis_to_quaternion(math.pi, [1.0, 0.0, 0.0])
+            # if i < len(self.points) - 1:
+            #     q = self.robot.angle_axis_to_quaternion(self.theta, self.rotation_axis)
+            #     quat = self.robot.quaternion_mult(
+            #         q0=q,
+            #         q1=self.robot.angle_axis_to_quaternion(
+            #             -math.pi / 2, [0.0, 0.0, 1.0]
+            #         ),
+            #     )
+            # else:
+            quat = self.robot.angle_axis_to_quaternion(math.pi, [1.0, 0.0, 0.0])
 
             self.quats.append(quat)
 
@@ -239,7 +243,7 @@ class Picker(Node):
                 #     self.robot.state = MOVEROBOT_STATE.WAITING
                 #     self.state = State.DONE
                 self.state = State.DONE
-                self.robot.starting_state = MOVEROBOT_STATE.WAITING
+                self.robot.state = MOVEROBOT_STATE.WAITING
 
         elif self.state == State.GRIPPER:
             self.get_logger().info("Executing gripper command", once=True)

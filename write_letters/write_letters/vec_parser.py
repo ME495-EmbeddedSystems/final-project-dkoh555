@@ -38,9 +38,11 @@ class VecParser(Node):
 
     def __send_points(self):
         points = []
-        x = 0.893
-        y = 0.0
-        z = 0.2
+        # x = 0.893
+        # y = 0.0
+        # z = 0.2
+
+        offset = 0.11
 
         # theta = np.linspace(0, 2 * np.pi, 100)
         # x_pos = x - 0.1
@@ -63,29 +65,32 @@ class VecParser(Node):
 
         # points.append(Point(x=x_pos, y=y_pos, z=z_pos))
 
-        x_pos = x - 0.1
-        y_pos = self.H[0][0] / 6.0 - 0.05
-        z_pos = self.H[0][0] / 6.0 + 0.1
+        # x_pos = x - 0.1
+        # y_pos = self.H[0][0] / 6.0 - 0.05
+        # z_pos = self.H[0][0] / 6.0 + 0.1
+        x_pos = self.H[0][0] / 6.0 + 0.25
+        y_pos = self.H[0][1] / 6.0 - 0.05
+        z_pos = offset + 0.1
 
-        points.append(Point(x=x_pos, y=-y_pos, z=z_pos))
+        points.append(Point(x=x_pos, y=y_pos, z=z_pos))
 
         for i in range(len(self.H)):
-            curr_x = self.H[i][0]
-            curr_y = self.H[i][1]
+            x_pos = self.H[i][0] / 6.0 + 0.25
+            y_pos = self.H[i][1] / 6.0 - 0.05
+            z_pos = offset
 
-            curr_x = curr_x / 6.0 - 0.05
-            curr_y = curr_y / 6.0 + 0.1
+            points.append(Point(x=x_pos, y=y_pos, z=z_pos))
 
-            points.append(Point(x=x, y=-curr_x, z=curr_y))
+        x_pos = self.H[-1][0] / 6.0 + 0.25
+        y_pos = self.H[-1][1] / 6.0 - 0.05
+        z_pos = offset + 0.1
 
-        x_pos = x - 0.1
-        y_pos = self.H[-1][0] / 6.0 - 0.05
-        z_pos = self.H[-1][0] / 6.0 + 0.1
-
-        points.append(Point(x=x_pos, y=-y_pos, z=z_pos))
+        points.append(Point(x=x_pos, y=y_pos, z=z_pos))
 
         # points.append(Point(x=y, y=-0.6, z=z))
         points.append(Point(x=0.3, y=0.0, z=0.5))
+
+        self.get_logger().info(f"Sent points: {points}")
 
         # points.append(Point(x=0.306891, y=0.0, z=0.486882))
         # points.append(Point(x=0.2, y=0.4, z=0.3))
