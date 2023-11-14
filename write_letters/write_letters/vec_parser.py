@@ -4,7 +4,7 @@ import rclpy
 from rclpy.node import Node
 from rclpy.task import Future
 
-from writer_interfaces.srv import Path
+from polyglotbot_interfaces.srv import Path
 from geometry_msgs.msg import Point
 
 

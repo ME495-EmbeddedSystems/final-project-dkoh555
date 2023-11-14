@@ -10,7 +10,7 @@
 
         <node pkg="write_letters" exec="writer" name="writer">
             <!-- <param from="$(find-pkg-share pickmeup)/fake.yaml" /> -->
-            <param name="x" value="0.5" />
+            <param name="x" value="0.8" />
             <param name="y" value="0.0" />
             <param name="z" value="0.05" />
         </node>

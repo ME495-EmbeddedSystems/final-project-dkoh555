@@ -26,7 +26,7 @@ from rcl_interfaces.msg import ParameterDescriptor
 from geometry_msgs.msg import Point, Quaternion
 from shape_msgs.msg import SolidPrimitive
 
-from writer_interfaces.srv import Path
+from polyglotbot_interfaces.srv import Path
 
 from enum import Enum, auto
 
@@ -115,6 +115,8 @@ class Picker(Node):
         self.robot = MoveRobot(
             self, self.move_group_name, self.fake_mode, self.ee_frame_id
         )
+        
+        # self.robot.tolerance = 1e-1
 
         self.posittion: Point = None
         self.orientation: Quaternion = None
@@ -124,18 +126,23 @@ class Picker(Node):
             1 / 100, self.timer_callback, callback_group=self.cb_group
         )
 
-        self.srv_path = self.create_service(
-            Path,
-            "load_path",
-        )
+        self.srv_path = self.create_service(Path, "load_path", self.srv_path_callback)
 
         self.comm_count = 0
         self.pos_list = [
             Point(x=self.goal_x, y=self.goal_y, z=self.goal_z),
             Point(x=self.goal_x, y=self.goal_y + 0.05, z=self.goal_z + 0.05),
+            Point(x=self.goal_x, y=self.goal_y - 0.05, z=self.goal_z + 0.05),
+            Point(x=self.goal_x, y=self.goal_y - 0.05, z=self.goal_z - 0.05),
+            Point(x=self.goal_x, y=self.goal_y + 0.05, z=self.goal_z - 0.05),
+            Point(x=self.goal_x, y=self.goal_y, z=self.goal_z),
             Point(x=0.3, y=0.0, z=0.5),
         ]
         self.ori_list = [
+            self.robot.angle_axis_to_quaternion(self.theta, self.rotation_axis),
+            self.robot.angle_axis_to_quaternion(self.theta, self.rotation_axis),
+            self.robot.angle_axis_to_quaternion(self.theta, self.rotation_axis),
+            self.robot.angle_axis_to_quaternion(self.theta, self.rotation_axis),
             self.robot.angle_axis_to_quaternion(self.theta, self.rotation_axis),
             self.robot.angle_axis_to_quaternion(self.theta, self.rotation_axis),
             self.robot.angle_axis_to_quaternion(math.pi, [1.0, 0.0, 0.0]),
@@ -144,6 +151,7 @@ class Picker(Node):
         self.state = State.ADDBOX
         self.grasp_called = False
         self.points: list[Point] = None
+        self.quats: list[Quaternion] = None
 
     def srv_path_callback(self, request, response):
         """
@@ -157,7 +165,32 @@ class Picker(Node):
             Path_Response: Response to the load_path service.
         """
         self.points = request.points
-        response.success = True
+        self.quats = []
+        for i in range(len(self.points)):
+            if i == 0:
+                self.quats.append(
+                    self.robot.angle_axis_to_quaternion(self.theta, self.rotation_axis)
+                )
+            elif i < len(self.points) - 1:
+                # self.quats.append(None)
+                self.quats.append(
+                    self.robot.angle_axis_to_quaternion(self.theta, self.rotation_axis)
+                )
+            else:
+                self.quats.append(
+                    self.robot.angle_axis_to_quaternion(math.pi, [1.0, 0.0, 0.0])
+                )
+
+        self.pos_list = self.points
+        self.ori_list = self.quats
+
+        if self.state == State.DONE:
+            response.success = True
+            self.comm_count = 0
+            self.state = State.MOVEARM
+        else:
+            response.success = False
+
         return response
 
     def timer_callback(self):
@@ -165,6 +198,9 @@ class Picker(Node):
         self.get_logger().info("Timer callback", once=True)
 
         # counter allows for only sending 1 goal position
+
+        # self.get_logger().info(f"State: {self.state}, Robot State: {self.robot.state}")
+
         if self.state == State.MOVEARM:
             if self.robot.state == MOVEROBOT_STATE.WAITING:
                 self.get_logger().info("In executable code")
@@ -182,16 +218,17 @@ class Picker(Node):
                     self.get_logger().info("Executing close gripper", once=True)
                     self.state = State.GRIPPER
                     self.robot.grasp()
-                elif self.comm_count == 2 and not self.fake_mode:
+                elif self.comm_count == (len(self.pos_list) - 1) and not self.fake_mode:
                     self.get_logger().info("Executing open gripper", once=True)
                     self.state = State.GRIPPER
                     self.robot.grasp()
-                elif self.comm_count <= 2:
+                elif self.comm_count < len(self.pos_list):
                     self.get_logger().info("Executing next command", once=True)
                     self.state = State.MOVEARM
                     self.robot.state = MOVEROBOT_STATE.WAITING
                     self.get_logger().info(f"{self.robot.state}")
                 else:
+                    self.comm_count = 0
                     self.robot.state = MOVEROBOT_STATE.WAITING
                     self.state = State.DONE
 
@@ -218,7 +255,7 @@ class Picker(Node):
 
             elif self.robot.state == MOVEROBOT_STATE.DONE:
                 self.robot.state = MOVEROBOT_STATE.WAITING
-                self.state = State.MOVEARM
+                self.state = State.DONE
 
         elif self.state == State.REMOVEBOX:
             if self.robot.state == MOVEROBOT_STATE.WAITING:

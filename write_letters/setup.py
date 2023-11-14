@@ -18,6 +18,9 @@ setup(
     license="TODO: License declaration",
     tests_require=["pytest"],
     entry_points={
-        "console_scripts": ["writer = write_letters.write:main"],
+        "console_scripts": [
+            "writer = write_letters.write:main",
+            "parser = write_letters.vec_parser:main",
+        ],
     },
 )
