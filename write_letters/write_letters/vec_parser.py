@@ -1,15 +1,27 @@
+"""
+Parser node that parses the all waypoints of a set of letters to a path.
+
+Raises
+------
+    RuntimeError: _description_
+
+Returns
+-------
+    _type_: _description_
+"""
 from random import random
 import numpy as np
 
 import rclpy
 from rclpy.node import Node
 from rclpy.task import Future
+from rclpy.callback_groups import ReentrantCallbackGroup
 
-from polyglotbot_interfaces.srv import Path, Write
-from polyglotbot_interfaces.msg import CharacterPath
+# messages
 from geometry_msgs.msg import Point
 
-from rclpy.callback_groups import ReentrantCallbackGroup
+# services
+from polyglotbot_interfaces.srv import Path, Write
 
 
 class VecParser(Node):
@@ -33,6 +45,7 @@ class VecParser(Node):
         self.offset = 0.6
         self.offset_x = 0.1
         self.offset_z = 0.3
+        self.offset_letter = 0.05
         self.offset_standup = 0.1
         self.gap_letter = 0.05
         self.scaling = 8.0
@@ -299,7 +312,7 @@ class VecParser(Node):
                 points.append(Point(x=x_pos, y=y_pos, z=z_pos))
 
             points.append(Point(x=x_pos, y=y_pos + self.offset_standup, z=z_pos))
-            curr_x += max_x + self.offset_x
+            curr_x += max_x + self.offset_letter
 
             # self.get_logger().info("END")
 

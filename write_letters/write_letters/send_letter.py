@@ -1,28 +1,39 @@
 """
-Test node for sending all waypoints for the robot.
+Test node for sending all waypoints of a set of the letters to the robot.
 
 Raises
 ------
     RuntimeError: _description_
     
-Return
-------
+Returns
+-------
 
 """
 import rclpy
 from rclpy.node import Node
 from rclpy.callback_groups import ReentrantCallbackGroup
 
-from polyglotbot_interfaces.srv import Write
+# messages
 from polyglotbot_interfaces.msg import CharacterPath
-
+from rcl_interfaces.msg import ParameterDescriptor
 from geometry_msgs.msg import Point
+
+# services
+from polyglotbot_interfaces.srv import Write
 
 
 class SendLetter(Node):
     def __init__(self):
         super().__init__("send_letter")
         self.cb_group = ReentrantCallbackGroup()
+
+        self.declare_parameter(
+            "letter_set", 0, ParameterDescriptor(description="Which letter set to send")
+        )
+
+        self.letter_set = (
+            self.get_parameter("letter_set").get_parameter_value().integer_value
+        )
 
         self.client_write = self.create_client(
             Write, "write", callback_group=self.cb_group
@@ -386,9 +397,12 @@ class SendLetter(Node):
             [0.0840625, 0.28],
         ]
 
-        self.__send_letters()
+        if self.letter_set == 0:
+            self.__send_letters_0()
+        elif self.letter_set == 1:
+            self.__send_letter_1()
 
-    def __send_letters(self):
+    def __send_letters_0(self):
         request = Write.Request()
         characters = []
 
@@ -481,6 +495,54 @@ class SendLetter(Node):
 
         char_O.points = points_O
         characters.append(char_O)
+
+        request.characters = characters
+        future = self.client_write.call_async(request=request)
+
+        rclpy.spin_until_future_complete(self, future)
+        self.get_logger().info(f"{future.result()}")
+
+    def __send_letter_1(self):
+        request = Write.Request()
+        characters = []
+
+        ############ FIRST ############
+        M_x = [M_coor[0] for M_coor in self.M]
+        M_y = [M_coor[1] for M_coor in self.M]
+
+        M_x_min = min(M_x)
+        M_y_min = min(M_y)
+
+        char_M = CharacterPath()
+        points_M = []
+
+        for i in range(len(self.M)):
+            x = self.M[i][0] - M_x_min
+            y = self.M[i][1] - M_y_min
+
+            points_M.append(Point(x=x, y=y))
+
+        char_M.points = points_M
+        characters.append(char_M)
+
+        ############ SECOND ############
+        N_x = [N_coor[0] for N_coor in self.N]
+        N_y = [N_coor[1] for N_coor in self.N]
+
+        N_x_min = min(N_x)
+        N_y_min = min(N_y)
+
+        char_N = CharacterPath()
+        points_N = []
+
+        for i in range(len(self.N)):
+            x = self.N[i][0] - N_x_min
+            y = self.N[i][1] - N_y_min
+
+            points_N.append(Point(x=x, y=y))
+
+        char_N.points = points_N
+        characters.append(char_N)
 
         request.characters = characters
         future = self.client_write.call_async(request=request)
