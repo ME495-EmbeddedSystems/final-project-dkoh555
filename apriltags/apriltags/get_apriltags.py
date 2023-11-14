@@ -53,71 +53,30 @@ class GetAprilTags(Node):
             try:
                 t = self.tf_buffer.lookup_transform(
                     "tag36h11:1",
-                    "camera_color_optical_frame", # /tf publishes camera_color_optical_frame, not camera link. But camera_link is root. Unsure which to use.
+                    "camera_link", # /tf publishes camera_color_optical_frame, not camera link. But camera_link is root. Unsure which to use.
                     rclpy.time.Time())
                 self.orientation = Quaternion(x=t.transform.rotation.x, y=t.transform.rotation.y, z=t.transform.rotation.z, w=t.transform.rotation.w)
                 self.state = State.ADD_BOX
 
             except TransformException as ex:
                 self.get_logger().info(
-                            f'Could not transform {"tag36h11:1"} to {"camera_color_optical_frame"}: {ex}', once=True)
+                            f'Could not transform {"tag36h11:1"} to {"camera_link"}: {ex}', once=True)
                 return
                     
             pose_info = f"Position: {t.transform.translation.x, t.transform.translation.y, 0.1*(t.transform.translation.z)}\n"\
                         f"Orientation: {t.transform.rotation.x, t.transform.rotation.y, t.transform.rotation.z, t.transform.rotation.w}"
 
-            # self.get_logger().info("\n" + pose_info + "\n")
+            self.get_logger().info("\n" + pose_info + "\n")
 
-            self.top_left = -0.1 * t.transform.translation.z
-
-            ########## BOTTOM LEFT
-            try:
-                t = self.tf_buffer.lookup_transform(
-                    "tag36h11:3",
-                    "camera_color_optical_frame", # /tf publishes camera_color_optical_frame, not camera link. But camera_link is root. Unsure which to use.
-                    rclpy.time.Time())
-                self.orientation = Quaternion(x=t.transform.rotation.x, y=t.transform.rotation.y, z=t.transform.rotation.z, w=t.transform.rotation.w)
-                self.state = State.ADD_BOX
-
-            except TransformException as ex:
-                self.get_logger().info(
-                            f'Could not transform {"tag36h11:3"} to {"camera_color_optical_frame"}: {ex}', once=True)
-                return
-                    
-            pose_info = f"Position: {t.transform.translation.x, t.transform.translation.y, 0.1*(t.transform.translation.z)}\n"\
-                        f"Orientation: {t.transform.rotation.x, t.transform.rotation.y, t.transform.rotation.z, t.transform.rotation.w}"
-
-            # self.get_logger().info("\n" + pose_info + "\n")
-
-            self.bottom_left = -0.1 * t.transform.translation.z
-
-            ########## TOP RIGHT
-            try:
-                t = self.tf_buffer.lookup_transform(
-                    "tag36h11:2",
-                    "camera_color_optical_frame", # /tf publishes camera_color_optical_frame, not camera link. But camera_link is root. Unsure which to use.
-                    rclpy.time.Time())
-                self.orientation = Quaternion(x=t.transform.rotation.x, y=t.transform.rotation.y, z=t.transform.rotation.z, w=t.transform.rotation.w)
-                self.state = State.ADD_BOX
-
-            except TransformException as ex:
-                self.get_logger().info(
-                            f'Could not transform {"tag36h11:2"} to {"camera_color_optical_frame"}: {ex}', once=True)
-                return
-                    
-            pose_info = f"Position: {t.transform.translation.x, t.transform.translation.y, 0.1*(t.transform.translation.z)}\n"\
-                        f"Orientation: {t.transform.rotation.x, t.transform.rotation.y, t.transform.rotation.z, t.transform.rotation.w}"
-
-            # self.get_logger().info("\n" + pose_info + "\n")
-
-            self.top_right = -0.1 * t.transform.translation.z
+            self.whiteboard_distance = -0.1 * t.transform.translation.z
 
         elif self.state == State.ADD_BOX:
-            if self.top_left and self.bottom_left and self.top_right:
+            if self.whiteboard_distance:
+
                 name = "whiteboard"
                 pose = Pose()
                 pose.position.x = 0.0
-                pose.position.y = (self.top_left + self.bottom_left + self.top_right)/3
+                pose.position.y = self.whiteboard_distance
                 pose.position.z = 0.5
                 pose.orientation = self.orientation
                 size = [0.5, 1.0, 0.05]
@@ -133,7 +92,7 @@ class GetAprilTags(Node):
         panda_camera_tf = TransformStamped()
         panda_camera_tf.header.stamp = self.get_clock().now().to_msg()
         panda_camera_tf.header.frame_id = "panda_link0"
-        panda_camera_tf.child_frame_id = "camera_color_optical_frame"
+        panda_camera_tf.child_frame_id = "camera_link"
 
         panda_camera_tf.transform.translation.x = 0.0
         panda_camera_tf.transform.translation.y = 0.0
