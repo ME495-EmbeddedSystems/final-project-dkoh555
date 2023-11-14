@@ -40,18 +40,19 @@ class GetAprilTags(Node):
 
         self.whiteboard_distance = None
 
-
+        self.top_left = None
+        self.bottom_left = None
+        self.top_right = None
 
 #########################################################################################################################
     def timer_callback(self):
 
-
         if self.state == State.LOOK_UP_TRANSFORM:
 
-            # Needs to be able to get data from multiple AprilTags, not just this one
+            ########## TOP LEFT
             try:
                 t = self.tf_buffer.lookup_transform(
-                    "tag36h11:4",
+                    "tag36h11:1",
                     "camera_link", # /tf publishes camera_color_optical_frame, not camera link. But camera_link is root. Unsure which to use.
                     rclpy.time.Time())
                 self.orientation = Quaternion(x=t.transform.rotation.x, y=t.transform.rotation.y, z=t.transform.rotation.z, w=t.transform.rotation.w)
@@ -59,26 +60,69 @@ class GetAprilTags(Node):
 
             except TransformException as ex:
                 self.get_logger().info(
-                            f'Could not transform {"tag36h11:4"} to {"camera_link"}: {ex}', once=True)
+                            f'Could not transform {"tag36h11:1"} to {"camera_link"}: {ex}', once=True)
                 return
                     
             pose_info = f"Position: {t.transform.translation.x, t.transform.translation.y, 0.1*(t.transform.translation.z)}\n"\
                         f"Orientation: {t.transform.rotation.x, t.transform.rotation.y, t.transform.rotation.z, t.transform.rotation.w}"
 
-            self.get_logger().info("\n" + pose_info + "\n")
+            # self.get_logger().info("\n" + pose_info + "\n")
 
-            self.whiteboard_distance = -0.1 * t.transform.translation.z
+            self.top_left = -0.1 * t.transform.translation.z
+
+            ########## BOTTOM LEFT
+            try:
+                t = self.tf_buffer.lookup_transform(
+                    "tag36h11:3",
+                    "camera_link", # /tf publishes camera_color_optical_frame, not camera link. But camera_link is root. Unsure which to use.
+                    rclpy.time.Time())
+                self.orientation = Quaternion(x=t.transform.rotation.x, y=t.transform.rotation.y, z=t.transform.rotation.z, w=t.transform.rotation.w)
+                self.state = State.ADD_BOX
+
+            except TransformException as ex:
+                self.get_logger().info(
+                            f'Could not transform {"tag36h11:3"} to {"camera_link"}: {ex}', once=True)
+                return
+                    
+            pose_info = f"Position: {t.transform.translation.x, t.transform.translation.y, 0.1*(t.transform.translation.z)}\n"\
+                        f"Orientation: {t.transform.rotation.x, t.transform.rotation.y, t.transform.rotation.z, t.transform.rotation.w}"
+
+            # self.get_logger().info("\n" + pose_info + "\n")
+
+            self.bottom_left = -0.1 * t.transform.translation.z
+
+            ########## TOP RIGHT
+            try:
+                t = self.tf_buffer.lookup_transform(
+                    "tag36h11:2",
+                    "camera_link", # /tf publishes camera_color_optical_frame, not camera link. But camera_link is root. Unsure which to use.
+                    rclpy.time.Time())
+                self.orientation = Quaternion(x=t.transform.rotation.x, y=t.transform.rotation.y, z=t.transform.rotation.z, w=t.transform.rotation.w)
+                self.state = State.ADD_BOX
+
+            except TransformException as ex:
+                self.get_logger().info(
+                            f'Could not transform {"tag36h11:2"} to {"camera_link"}: {ex}', once=True)
+                return
+                    
+            pose_info = f"Position: {t.transform.translation.x, t.transform.translation.y, 0.1*(t.transform.translation.z)}\n"\
+                        f"Orientation: {t.transform.rotation.x, t.transform.rotation.y, t.transform.rotation.z, t.transform.rotation.w}"
+
+            # self.get_logger().info("\n" + pose_info + "\n")
+
+            self.top_right = -0.1 * t.transform.translation.z
 
         elif self.state == State.ADD_BOX:
-            name = "whiteboard"
-            pose = Pose()
-            pose.position.x = 0.0
-            pose.position.y = self.whiteboard_distance
-            pose.position.z = 0.5
-            pose.orientation = self.orientation
-            size = [0.5, 1.0, 0.05]
-            shape = SolidPrimitive(type=SolidPrimitive.BOX, dimensions=size)
-            self.robot.add_box(name=name, pose=pose, shape=shape)
+            if self.top_left and self.bottom_left and self.top_right:
+                name = "whiteboard"
+                pose = Pose()
+                pose.position.x = 0.0
+                pose.position.y = (self.top_left + self.bottom_left + self.top_right)/3
+                pose.position.z = 0.5
+                pose.orientation = self.orientation
+                size = [0.5, 1.0, 0.05]
+                shape = SolidPrimitive(type=SolidPrimitive.BOX, dimensions=size)
+                self.robot.add_box(name=name, pose=pose, shape=shape)
 
             self.state = State.LOOK_UP_TRANSFORM
 #########################################################################################################################
