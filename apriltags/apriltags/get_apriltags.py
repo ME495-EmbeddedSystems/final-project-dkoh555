@@ -53,14 +53,14 @@ class GetAprilTags(Node):
             try:
                 t = self.tf_buffer.lookup_transform(
                     "tag36h11:1",
-                    "camera_link", # /tf publishes camera_color_optical_frame, not camera link. But camera_link is root. Unsure which to use.
+                    "camera_color_optical_frame", # /tf publishes camera_color_optical_frame, not camera link. But camera_link is root. Unsure which to use.
                     rclpy.time.Time())
                 self.orientation = Quaternion(x=t.transform.rotation.x, y=t.transform.rotation.y, z=t.transform.rotation.z, w=t.transform.rotation.w)
                 self.state = State.ADD_BOX
 
             except TransformException as ex:
                 self.get_logger().info(
-                            f'Could not transform {"tag36h11:1"} to {"camera_link"}: {ex}', once=True)
+                            f'Could not transform {"tag36h11:1"} to {"camera_color_optical_frame"}: {ex}', once=True)
                 return
                     
             pose_info = f"Position: {t.transform.translation.x, t.transform.translation.y, 0.1*(t.transform.translation.z)}\n"\
@@ -74,14 +74,14 @@ class GetAprilTags(Node):
             try:
                 t = self.tf_buffer.lookup_transform(
                     "tag36h11:3",
-                    "camera_link", # /tf publishes camera_color_optical_frame, not camera link. But camera_link is root. Unsure which to use.
+                    "camera_color_optical_frame", # /tf publishes camera_color_optical_frame, not camera link. But camera_link is root. Unsure which to use.
                     rclpy.time.Time())
                 self.orientation = Quaternion(x=t.transform.rotation.x, y=t.transform.rotation.y, z=t.transform.rotation.z, w=t.transform.rotation.w)
                 self.state = State.ADD_BOX
 
             except TransformException as ex:
                 self.get_logger().info(
-                            f'Could not transform {"tag36h11:3"} to {"camera_link"}: {ex}', once=True)
+                            f'Could not transform {"tag36h11:3"} to {"camera_color_optical_frame"}: {ex}', once=True)
                 return
                     
             pose_info = f"Position: {t.transform.translation.x, t.transform.translation.y, 0.1*(t.transform.translation.z)}\n"\
@@ -95,14 +95,14 @@ class GetAprilTags(Node):
             try:
                 t = self.tf_buffer.lookup_transform(
                     "tag36h11:2",
-                    "camera_link", # /tf publishes camera_color_optical_frame, not camera link. But camera_link is root. Unsure which to use.
+                    "camera_color_optical_frame", # /tf publishes camera_color_optical_frame, not camera link. But camera_link is root. Unsure which to use.
                     rclpy.time.Time())
                 self.orientation = Quaternion(x=t.transform.rotation.x, y=t.transform.rotation.y, z=t.transform.rotation.z, w=t.transform.rotation.w)
                 self.state = State.ADD_BOX
 
             except TransformException as ex:
                 self.get_logger().info(
-                            f'Could not transform {"tag36h11:2"} to {"camera_link"}: {ex}', once=True)
+                            f'Could not transform {"tag36h11:2"} to {"camera_color_optical_frame"}: {ex}', once=True)
                 return
                     
             pose_info = f"Position: {t.transform.translation.x, t.transform.translation.y, 0.1*(t.transform.translation.z)}\n"\
@@ -133,7 +133,7 @@ class GetAprilTags(Node):
         panda_camera_tf = TransformStamped()
         panda_camera_tf.header.stamp = self.get_clock().now().to_msg()
         panda_camera_tf.header.frame_id = "panda_link0"
-        panda_camera_tf.child_frame_id = "camera_link"
+        panda_camera_tf.child_frame_id = "camera_color_optical_frame"
 
         panda_camera_tf.transform.translation.x = 0.0
         panda_camera_tf.transform.translation.y = 0.0
