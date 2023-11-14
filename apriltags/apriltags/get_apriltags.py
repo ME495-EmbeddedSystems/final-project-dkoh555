@@ -38,17 +38,20 @@ class GetAprilTags(Node):
         self.robot = MoveRobot(self, "panda_manipulator", True, "panda_hand_tcp")
         self.orientation: Quaternion = None
 
+        self.whiteboard_distance = None
+
 
 
 #########################################################################################################################
     def timer_callback(self):
+
 
         if self.state == State.LOOK_UP_TRANSFORM:
 
             # Needs to be able to get data from multiple AprilTags, not just this one
             try:
                 t = self.tf_buffer.lookup_transform(
-                    "tag36h11:9",
+                    "tag36h11:4",
                     "camera_link", # /tf publishes camera_color_optical_frame, not camera link. But camera_link is root. Unsure which to use.
                     rclpy.time.Time())
                 self.orientation = Quaternion(x=t.transform.rotation.x, y=t.transform.rotation.y, z=t.transform.rotation.z, w=t.transform.rotation.w)
@@ -56,20 +59,21 @@ class GetAprilTags(Node):
 
             except TransformException as ex:
                 self.get_logger().info(
-                            f'Could not transform {"tag36h11:9"} to {"camera_link"}: {ex}', once=True)
+                            f'Could not transform {"tag36h11:4"} to {"camera_link"}: {ex}', once=True)
                 return
                     
-            pose_info = f"Position: {t.transform.translation.x, t.transform.translation.y, t.transform.translation.z}\n"\
+            pose_info = f"Position: {t.transform.translation.x, t.transform.translation.y, 0.1*(t.transform.translation.z)}\n"\
                         f"Orientation: {t.transform.rotation.x, t.transform.rotation.y, t.transform.rotation.z, t.transform.rotation.w}"
 
             self.get_logger().info("\n" + pose_info + "\n")
 
+            self.whiteboard_distance = -0.1 * t.transform.translation.z
 
         elif self.state == State.ADD_BOX:
             name = "whiteboard"
             pose = Pose()
             pose.position.x = 0.0
-            pose.position.y = 0.0
+            pose.position.y = self.whiteboard_distance
             pose.position.z = 0.5
             pose.orientation = self.orientation
             size = [0.5, 1.0, 0.05]
