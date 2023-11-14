@@ -19,6 +19,8 @@ rosidl_generate_interfaces(${PROJECT_NAME}
   "srv/GetCharacters.srv"
   "srv/TranslateString.srv"
   "srv/Path.srv"
+  "srv/Write.srv"
+  "msg/CharacterPath.msg"
   DEPENDENCIES
   std_msgs
   geometry_msgs

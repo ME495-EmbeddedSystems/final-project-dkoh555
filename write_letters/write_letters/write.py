@@ -60,7 +60,7 @@ class Picker(Node):
         )
         self.declare_parameter(
             "ee_frame_id",
-            "panda_hand_tcp",
+            "panda_link8",
             ParameterDescriptor(description="Name of the e-e frame"),
         )
 
@@ -98,7 +98,7 @@ class Picker(Node):
 
         # Orientation
         self.declare_parameter(
-            "theta", math.pi / 2, ParameterDescriptor(description="Angle of rotation")
+            "theta", math.pi, ParameterDescriptor(description="Angle of rotation")
         )
         self.declare_parameter(
             "rotation_axis",
@@ -172,16 +172,16 @@ class Picker(Node):
         for i in range(len(self.points)):
             # if i == 0:
             #     quat = self.robot.angle_axis_to_quaternion(math.pi, [1.0, 0.0, 0.0])
-            # if i < len(self.points) - 1:
-            #     q = self.robot.angle_axis_to_quaternion(self.theta, self.rotation_axis)
-            #     quat = self.robot.quaternion_mult(
-            #         q0=q,
-            #         q1=self.robot.angle_axis_to_quaternion(
-            #             -math.pi / 2, [0.0, 0.0, 1.0]
-            #         ),
-            #     )
-            # else:
-            quat = self.robot.angle_axis_to_quaternion(math.pi, [1.0, 0.0, 0.0])
+            if i < len(self.points) - 1:
+                q = self.robot.angle_axis_to_quaternion(self.theta, self.rotation_axis)
+                quat = self.robot.quaternion_mult(
+                    q0=q,
+                    q1=self.robot.angle_axis_to_quaternion(
+                        math.pi / 2, [0.0, 0.0, 1.0]
+                    ),
+                )
+            else:
+                quat = self.robot.angle_axis_to_quaternion(math.pi, [1.0, 0.0, 0.0])
 
             self.quats.append(quat)
 

@@ -1,5 +1,5 @@
 repositories:
-  homework3group-nu-jliu:
+  franka_mover:
     type: git
     url: git@github.com:ME495-EmbeddedSystems/homework3group-nu-jliu.git
     version: main
