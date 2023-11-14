@@ -21,6 +21,7 @@ setup(
         "console_scripts": [
             "writer = write_letters.write:main",
             "parser = write_letters.vec_parser:main",
+            "sender = write_letters.send_letter:main",
         ],
     },
 )

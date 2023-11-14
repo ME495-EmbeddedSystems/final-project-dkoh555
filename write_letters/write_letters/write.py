@@ -126,7 +126,9 @@ class Picker(Node):
             1 / 100, self.timer_callback, callback_group=self.cb_group
         )
 
-        self.srv_path = self.create_service(Path, "load_path", self.srv_path_callback)
+        self.srv_path = self.create_service(
+            Path, "load_path", self.srv_path_callback, callback_group=self.cb_group
+        )
 
         self.comm_count = 0
         self.pos_list = [

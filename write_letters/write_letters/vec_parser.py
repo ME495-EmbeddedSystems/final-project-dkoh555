@@ -5,18 +5,37 @@ import rclpy
 from rclpy.node import Node
 from rclpy.task import Future
 
-from polyglotbot_interfaces.srv import Path
+from polyglotbot_interfaces.srv import Path, Write
+from polyglotbot_interfaces.msg import CharacterPath
 from geometry_msgs.msg import Point
+
+from rclpy.callback_groups import ReentrantCallbackGroup
 
 
 class VecParser(Node):
     def __init__(self):
         super().__init__("vec_parser")
+        self.cb_group = ReentrantCallbackGroup()
 
-        self.client_points = self.create_client(Path, "load_path")
+        self.client_points = self.create_client(
+            Path, "load_path", callback_group=self.cb_group
+        )
+        self.srv_write = self.create_service(
+            Write,
+            "write",
+            callback=self.srv_write_callback,
+            callback_group=self.cb_group,
+        )
 
         if not self.client_points.wait_for_service(timeout_sec=2.0):
             raise RuntimeError("Service 'load_path' not available")
+
+        self.offset = 0.6
+        self.offset_x = 0.1
+        self.offset_z = 0.3
+        self.offset_standup = 0.1
+        self.gap_letter = 0.05
+        self.scaling = 8.0
 
         ################# Points for Testing #################
         self.H = [
@@ -178,14 +197,15 @@ class VecParser(Node):
             [4.5746875, 0.4096875],
         ]
 
-        self.__send_points()
+        # self.__send_points()
 
     def __send_points(self):
+        """Send points to draw on the board."""
         points = []
 
         # offset = 0.11
-        offset = 0.6
-        scaling = 8.0
+        # offset = 0.6
+        # scaling = 8.0
 
         ###################### Stand-up Position ######################
 
@@ -197,9 +217,9 @@ class VecParser(Node):
 
         ###################################
         ############  ON BOARD  ###########
-        x_pos = (self.HELLO[0][0] - 2.0) / scaling + 0.1
-        y_pos = -offset + 0.1
-        z_pos = self.HELLO[0][1] / scaling + 0.3
+        x_pos = (self.HELLO[0][0] - 2.0) / self.scaling + 0.1
+        y_pos = -self.offset + 0.1
+        z_pos = self.HELLO[0][1] / self.scaling + 0.3
 
         points.append(Point(x=x_pos, y=y_pos, z=z_pos))
 
@@ -214,9 +234,9 @@ class VecParser(Node):
 
             ###################################
             ############  ON BOARD  ###########
-            x_pos = (self.HELLO[i][0] - 2.0) / scaling + 0.1
-            y_pos = -offset
-            z_pos = self.HELLO[i][1] / scaling + 0.3
+            x_pos = (self.HELLO[i][0] - 2.0) / self.scaling + 0.1
+            y_pos = -self.offset
+            z_pos = self.HELLO[i][1] / self.scaling + 0.3
 
             points.append(Point(x=x_pos, y=y_pos, z=z_pos))
 
@@ -230,9 +250,9 @@ class VecParser(Node):
 
         ###################################
         ############  ON BOARD  ###########
-        x_pos = (self.HELLO[-1][0] - 2.0) / scaling + 0.1
-        y_pos = -offset + 0.1
-        z_pos = self.HELLO[-1][1] / scaling + 0.3
+        x_pos = (self.HELLO[-1][0] - 2.0) / self.scaling + 0.1
+        y_pos = -self.offset + 0.1
+        z_pos = self.HELLO[-1][1] / self.scaling + 0.3
 
         points.append(Point(x=x_pos, y=y_pos, z=z_pos))
 
@@ -246,10 +266,57 @@ class VecParser(Node):
 
         self.get_logger().info(f"{future.result()}")
 
+    def srv_write_callback(self, request, response):
+        self.get_logger().info("Writing ...")
+
+        curr_x = -0.4
+        points = []
+
+        for character in request.characters:
+            # self.get_logger().info("START")
+
+            max_x = 0.0
+            has_stand_down = False
+
+            for point in character.points:
+                # self.get_logger().info(f"{point}")
+
+                px = point.x / self.scaling
+                py = point.y / self.scaling
+
+                max_x = max(max_x, px)
+
+                x_pos = -(curr_x + px + self.offset_x)
+                y_pos = -self.offset
+                z_pos = py + self.offset_z
+
+                if not has_stand_down:
+                    points.append(
+                        Point(x=x_pos, y=y_pos + self.offset_standup, z=z_pos)
+                    )
+                    has_stand_down = True
+
+                points.append(Point(x=x_pos, y=y_pos, z=z_pos))
+
+            points.append(Point(x=x_pos, y=y_pos + self.offset_standup, z=z_pos))
+            curr_x += max_x + self.offset_x
+
+            # self.get_logger().info("END")
+
+        self.get_logger().info(f"curr x: {curr_x}")
+        points.append(Point(x=0.3, y=0.0, z=0.5))
+        future = self.client_points.call_async(Path.Request(points=points))
+        rclpy.spin_until_future_complete(self, future)
+
+        response.success = future.result().success
+        self.get_logger().info(f"{future.result()}")
+        return response
+
 
 def main(args=None):
     rclpy.init(args=args)
     node_parser = VecParser()
+    rclpy.spin(node=node_parser)
 
     node_parser.destroy_node()
     rclpy.shutdown()
