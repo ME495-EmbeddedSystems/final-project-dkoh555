@@ -23,3 +23,9 @@
 
 
 </launch>
+
+
+
+<!-- # image geometry package can do it
+# image proc node should take care of the synchronization -->
+ <!-- #change to image_rect??? Make sure I'm using the rectified image. run the image proc node? -->
