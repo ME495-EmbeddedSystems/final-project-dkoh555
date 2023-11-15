@@ -31,8 +31,7 @@ class GetAprilTags(Node):
         self.tf_listener = TransformListener(self.tf_buffer, self)
         self.tf_broadcaster = TransformBroadcaster(self)
 
-
-
+# 3 is top left, 4 is bottom left, 1 is bottom right
 #########################################################################################################################
     def timer_callback(self):
 
@@ -50,7 +49,7 @@ class GetAprilTags(Node):
 
 
 
-                self.get_logger().info("\n" + pose_info + "\n")
+                # self.get_logger().info("\n" + pose_info + "\n")
 
 
             except TransformException as ex:
@@ -60,13 +59,8 @@ class GetAprilTags(Node):
                     
             
             
-
-
-
 #########################################################################################################################
-
-
-        
+    
 def get_apriltags_entry(args=None):
     rclpy.init(args=args)
     node = GetAprilTags()
