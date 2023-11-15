@@ -316,7 +316,7 @@ class VecParser(Node):
 
         curr_x = -0.55
         curr_z = 0.45
-        points = []
+        self.points = []
 
         for character in request.characters:
             # self.get_logger().info("START")
@@ -339,14 +339,14 @@ class VecParser(Node):
                 z_pos = py + curr_z
 
                 if not has_stand_down:
-                    points.append(
+                    self.points.append(
                         Point(x=x_pos, y=y_pos + self.offset_standup, z=z_pos)
                     )
                     has_stand_down = True
 
-                points.append(Point(x=x_pos, y=y_pos, z=z_pos))
+                self.points.append(Point(x=x_pos, y=y_pos, z=z_pos))
 
-            points.append(Point(x=x_pos, y=y_pos + self.offset_standup, z=z_pos))
+            self.points.append(Point(x=x_pos, y=y_pos + self.offset_standup, z=z_pos))
             curr_x += max_x + self.offset_letter
 
             if curr_x > 0.25:
@@ -358,8 +358,9 @@ class VecParser(Node):
             # self.get_logger().info("END")
 
         self.get_logger().info(f"max x: {curr_x}")
-        points.append(Point(x=0.3, y=0.0, z=0.5))
-        future = self.client_points.call_async(Path.Request(points=points))
+        self.points.append(Point(x=0.3, y=0.0, z=0.5))
+        future = self.client_points.call_async(Path.Request(points=self.points))
+        # self.get_logger().info(f"{self.points}")
         # rclpy.spin_until_future_complete(self, future)
         future.add_done_callback(self.path_future_callback)
 
@@ -369,6 +370,11 @@ class VecParser(Node):
 
     def path_future_callback(self, future_path: Future):
         self.get_logger().info(f"{future_path.result()}")
+        future = self.client_points.call_async(Path.Request(points=self.points))
+        future.add_done_callback(self.path_future_callback_2)
+
+    def path_future_callback_2(self, future_path: Future):
+        self.get_logger().info(f"2nd: {future_path.result()}")
 
 
 def main(args=None):
