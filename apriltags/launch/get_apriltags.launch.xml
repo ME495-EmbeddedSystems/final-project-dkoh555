@@ -1,30 +1,32 @@
 <launch>
+    <arg name="use_rviz" default="false" />
 
-    <node pkg="apriltags" exec="get_apriltags" name="get_apriltags"/>
+
+    <node pkg="apriltags" exec="get_apriltags" name="get_apriltags" />
 
     <include file="$(find-pkg-share realsense2_camera)/launch/rs_launch.py">
-        <arg name="depth_module.profile" value="1280x720x30"/>
-        <arg name="pointcloud.enable" value="true"/>
+        <arg name="depth_module.profile" value="1280x720x30" />
+        <arg name="pointcloud.enable" value="true" />
 
     </include>
 
 
-
     <node pkg="apriltag_ros" exec="apriltag_node" name="apriltag_node">
-    
-            <param from="$(find-pkg-share apriltags)/tags.yaml"/>
+
+        <param from="$(find-pkg-share apriltags)/tags.yaml" />
 
 
-            <remap from="/camera_info" to="/camera/color/camera_info"/>
-            <remap from="/image_rect" to="/camera/color/image_raw"/>
+        <remap from="/camera_info" to="/camera/color/camera_info" />
+        <remap from="/image_rect" to="/camera/color/image_raw" />
     </node>
 
-
-    <node pkg="rviz2" exec="rviz2" args="-d $(find-pkg-share apriltags)/view_apriltags.rviz"/>
+    <group if="$(var use_rviz)">
+        <node pkg="rviz2" exec="rviz2" args="-d $(find-pkg-share apriltags)/view_apriltags.rviz" />
+    </group>
 
 
 </launch>
 
 <!-- # image geometry package can do it
 # image proc node should take care of the synchronization -->
- <!-- #change to image_rect??? Make sure I'm using the rectified image. run the image proc node? -->
+<!-- #change to image_rect??? Make sure I'm using the rectified image. run the image proc node? -->
