@@ -176,6 +176,8 @@ class Picker(Node):
             )
         )
 
+        self.get_logger().info(f"pose to go: {self.poses}")
+
         if self.state == State.DONE:
             self.comm_count = 0
             self.state = State.MOVEARM
