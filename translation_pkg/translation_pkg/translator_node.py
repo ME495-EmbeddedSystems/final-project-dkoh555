@@ -84,7 +84,8 @@ class Translator(Node):
     def target_language_callback(self, request, response):
         self.target_language = request.input
 
-        self.translate_string()
+        if self.input_string is not None:
+            self.translate_string()
         self.display_strings()
 
         response.output = "Target language switched to: " + self.target_language
