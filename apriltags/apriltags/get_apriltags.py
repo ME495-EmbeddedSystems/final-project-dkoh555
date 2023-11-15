@@ -43,12 +43,19 @@ class GetAprilTags(Node):
         hand_camera_tf.header.frame_id = "panda_hand"
         hand_camera_tf.child_frame_id = "camera_link"
 
+        # hand_camera_tf.transform.translation.x = 50e-3
+        # hand_camera_tf.transform.translation.y = 15e-3
+        # hand_camera_tf.transform.translation.z = 65e-3
+
         hand_camera_tf.transform.translation.x = 50e-3
         hand_camera_tf.transform.translation.y = 15e-3
         hand_camera_tf.transform.translation.z = 65e-3
 
+        # hand_camera_tf.transform.rotation = Quaternion(
+        #     x=0.8320387, y=-0.0052696, z=0.5546925, w=-0.0000832
+        # )
         hand_camera_tf.transform.rotation = Quaternion(
-            x=0.8320387, y=-0.0052696, z=0.5546925, w=-0.0000832
+            x=0.7071068, y=0.0, z=0.7071068, w=0.0
         )
 
         self.tf_static_broadcaster.sendTransform(hand_camera_tf)
