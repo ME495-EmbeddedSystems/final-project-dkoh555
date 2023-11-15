@@ -22,7 +22,7 @@
             <arg name="robot_ip" value="panda0.robot" />
         </include>
 
-        <node pkg="write_letters" exec="writer" name="picker">
+        <node pkg="write_letters" exec="writer" name="writer">
             <!-- <param from="$(find-pkg-share pickmeup)/real.yaml" /> -->
             <param name="x" value="0.5" />
             <param name="y" value="0.0" />
