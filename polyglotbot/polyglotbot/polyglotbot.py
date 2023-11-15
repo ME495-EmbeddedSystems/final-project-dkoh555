@@ -48,6 +48,7 @@ class State(Enum):
     WAITING = auto()  # Waiting to receive go-ahead to translate
     SCANNING = auto()  # Scans the latest frame for words
     TRANSLATING = auto()  # Translates the scanned words
+    PROCESSING = auto()
     COMPLETE = auto()  # When the Polyglotbot has completed translating
 
 
@@ -123,13 +124,8 @@ class Polyglotbot(Node):
         # If SCANNING, when the new source_string and target_language is assigned begin translating
         if self.state is State.SCANNING:
             if self.source_string is not None and self.target_language is not None:
-                print("1")
+                print("2")
                 self.state = State.TRANSLATING
-            # Warn the user if either the source_string or target_language has not been identified
-            else:
-                self.get_logger().warn(
-                    "Target language and source string not identified", once=True
-                )
 
         # If TRANSLATING, then send target_language and source_string to translator node
         if self.state is State.TRANSLATING:
@@ -141,6 +137,12 @@ class Polyglotbot(Node):
             future_target_language.add_done_callback(
                 self.future_target_language_callback
             )
+            # Whilst waiting for both services to complete, polyglotbot is PROCESSING
+            self.state = State.PROCESSING
+
+        # Whilst PROCESSING, do nothing until both services are complete
+        if self.state is State.PROCESSING:
+            pass
 
         # If COMPLETE, then reset variables and go back to WAITING mode to redo process
         if self.state is State.COMPLETE:
@@ -153,6 +155,7 @@ class Polyglotbot(Node):
     # SERVICE CALLBACKS
     #
     async def start_translating_callback(self, request, response):
+        self.get_logger().info("Polyglotbot beginnig translation...")
         self.state = State.SCANNING
         req = GetCharacters.Request()
         result = await self.cli_get_characters.call_async(req)
@@ -164,7 +167,7 @@ class Polyglotbot(Node):
     # FUTURE CALLBACKS
     #
     def future_target_language_callback(self, future_target_language):
-        self.get_logger().info("%s" % future_target_language)
+        self.get_logger().info("%s" % future_target_language.result().output)
         # Send the source string to the translator node
         req = TranslateString.Request()
         req.input = self.source_string
@@ -175,7 +178,7 @@ class Polyglotbot(Node):
         )
 
     def future_translated_string_callback(self, future_translated_string):
-        self.translated_string = future_translated_string
+        self.translated_string = future_translated_string.result().output
         self.get_logger().info("Translated string: %s" % self.translated_string)
         self.state = State.COMPLETE
 
