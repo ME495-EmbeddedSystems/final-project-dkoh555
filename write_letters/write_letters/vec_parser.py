@@ -1,13 +1,21 @@
 """
 Parser node that parses the all waypoints of a set of letters to a path.
 
+Services
+--------
+    write [Write]: Write the characters on the board.
+
+Clients
+-------
+    load_path [Path]: Load the path on robot.
+
 Raises
 ------
-    RuntimeError: _description_
+    RuntimeError: Service "load_path" not available.
 
 Returns
 -------
-    _type_: _description_
+
 """
 from random import random
 import numpy as np
@@ -32,6 +40,9 @@ class VecParser(Node):
         self.client_points = self.create_client(
             Path, "load_path", callback_group=self.cb_group
         )
+
+        self.log()
+
         self.srv_write = self.create_service(
             Write,
             "write",
@@ -39,16 +50,22 @@ class VecParser(Node):
             callback_group=self.cb_group,
         )
 
+        self.log()
+
         if not self.client_points.wait_for_service(timeout_sec=2.0):
             raise RuntimeError("Service 'load_path' not available")
 
-        self.offset = 0.6
+        # TODO: Make it parameter or get the value from april tags
+        self.offset = 0.4
         self.offset_x = 0.1
         self.offset_z = 0.3
-        self.offset_letter = 0.05
+        self.offset_letter = 0.03
         self.offset_standup = 0.1
         self.gap_letter = 0.05
-        self.scaling = 8.0
+        self.scaling = 12.0
+        self.x_max = 0.7
+        self.x_min = -0.4
+        self.z_max = 0.8
 
         ################# Points for Testing #################
         self.H = [
@@ -279,16 +296,33 @@ class VecParser(Node):
 
         self.get_logger().info(f"{future.result()}")
 
+    def log(self):
+        self.get_logger().info("LOG")
+
     def srv_write_callback(self, request, response):
+        """
+        Callback function for the write service.
+
+        Args:
+        ----
+            request (_type_): _description_
+            response (_type_): _description_
+
+        Returns:
+        -------
+            _type_: _description_
+        """
         self.get_logger().info("Writing ...")
 
-        curr_x = -0.4
+        curr_x = -0.55
+        curr_z = 0.45
         points = []
 
         for character in request.characters:
             # self.get_logger().info("START")
 
             max_x = 0.0
+            max_y = 0.0
             has_stand_down = False
 
             for point in character.points:
@@ -298,10 +332,11 @@ class VecParser(Node):
                 py = point.y / self.scaling
 
                 max_x = max(max_x, px)
+                max_y = max(max_y, py)
 
-                x_pos = -(curr_x + px + self.offset_x)
+                x_pos = -(curr_x + px)
                 y_pos = -self.offset
-                z_pos = py + self.offset_z
+                z_pos = py + curr_z
 
                 if not has_stand_down:
                     points.append(
@@ -314,22 +349,32 @@ class VecParser(Node):
             points.append(Point(x=x_pos, y=y_pos + self.offset_standup, z=z_pos))
             curr_x += max_x + self.offset_letter
 
+            if curr_x > 0.25:
+                curr_z -= max_y + self.offset_letter
+                curr_x = -0.55
+
+                self.get_logger().info("Changing line ...")
+
             # self.get_logger().info("END")
 
-        self.get_logger().info(f"curr x: {curr_x}")
+        self.get_logger().info(f"max x: {curr_x}")
         points.append(Point(x=0.3, y=0.0, z=0.5))
         future = self.client_points.call_async(Path.Request(points=points))
-        rclpy.spin_until_future_complete(self, future)
+        # rclpy.spin_until_future_complete(self, future)
+        future.add_done_callback(self.path_future_callback)
 
-        response.success = future.result().success
-        self.get_logger().info(f"{future.result()}")
+        response.result = "Finished"
+        # self.get_logger().info(f"{future.result()}")
         return response
+
+    def path_future_callback(self, future_path: Future):
+        self.get_logger().info(f"{future_path.result()}")
 
 
 def main(args=None):
     rclpy.init(args=args)
     node_parser = VecParser()
-    rclpy.spin(node=node_parser)
+    rclpy.spin(node_parser)
 
     node_parser.destroy_node()
     rclpy.shutdown()

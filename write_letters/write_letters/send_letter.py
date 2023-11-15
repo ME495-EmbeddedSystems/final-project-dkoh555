@@ -11,6 +11,7 @@ Returns
 """
 import rclpy
 from rclpy.node import Node
+from rclpy.task import Future
 from rclpy.callback_groups import ReentrantCallbackGroup
 
 # messages
@@ -544,11 +545,36 @@ class SendLetter(Node):
         char_N.points = points_N
         characters.append(char_N)
 
+        # characters.append(char_M)
+        # characters.append(char_N)
+        # characters.append(char_M)
+        # characters.append(char_N)
+        # characters.append(char_M)
+        # characters.append(char_N)
+        # characters.append(char_M)
+        # characters.append(char_N)
+        # characters.append(char_M)
+        # characters.append(char_N)
+        # characters.append(char_M)
+        # characters.append(char_N)
+        # characters.append(char_M)
+        # characters.append(char_N)
+        # characters.append(char_M)
+        # characters.append(char_N)
+        # characters.append(char_M)
+        # characters.append(char_N)
+        # characters.append(char_M)
+        # characters.append(char_N)
+        # characters.append(char_M)
+        # characters.append(char_N)
+
         request.characters = characters
         future = self.client_write.call_async(request=request)
-
+        self.get_logger().info("calling write service ...")
         rclpy.spin_until_future_complete(self, future)
         self.get_logger().info(f"{future.result()}")
+
+    # def write_future_callback(self, future_write: Future):
 
 
 def main(args=None):
