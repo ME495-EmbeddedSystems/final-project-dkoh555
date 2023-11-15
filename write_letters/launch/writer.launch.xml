@@ -31,4 +31,6 @@
         </node>
     </group>
 
+    <node pkg="write_letters" exec="parser" name="parser" />
+
 </launch>

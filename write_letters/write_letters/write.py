@@ -133,7 +133,12 @@ class Picker(Node):
             self.srv_path_callback,
             callback_group=self.cb_group,
         )
-        self.srv_calibrate = self.create_service(Empty, "calibrate")
+        self.srv_calibrate = self.create_service(
+            Empty,
+            "calibrate",
+            callback=self.srv_calibrate_callback,
+            callback_group=self.cb_group,
+        )
 
         self.comm_count = 0
         self.pos_list = [
