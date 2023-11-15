@@ -82,6 +82,17 @@ class Translator(Node):
             self.pub_target_language.publish(msg)
 
     def target_language_callback(self, request, response):
+        # Test the target language to ensure that it is supported
+        try:
+            test = self.translator.translate(
+                text="testing testing", src="en", dest=request.input
+            )
+        # Return specific string to service to signal invalid type
+        except Exception as e:
+            self.get_logger().warn(f"Failed to set target language: {e}")
+            response.output = "INVALID LANGUAGE"
+            return response
+
         self.target_language = request.input
 
         if self.input_string is not None:
