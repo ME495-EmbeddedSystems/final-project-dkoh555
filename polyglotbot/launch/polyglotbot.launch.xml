@@ -1,0 +1,18 @@
+<launch>
+
+    <node 
+        name="translator_node" 
+        pkg="translation_pkg"
+        exec="translator_node">
+    </node>
+
+    <node 
+        name="polyglotbot" 
+        pkg="polyglotbot"
+        exec="polyglotbot">
+    </node>
+
+    <include file="$(find-pkg-share read_whiteboard)/read_whiteboard.launch.xml">
+    </include>
+
+</launch>

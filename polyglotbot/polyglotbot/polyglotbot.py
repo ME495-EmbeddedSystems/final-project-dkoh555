@@ -124,11 +124,11 @@ class Polyglotbot(Node):
         # If SCANNING, when the new source_string and target_language is assigned begin translating
         if self.state is State.SCANNING:
             if self.source_string is not None and self.target_language is not None:
-                print("2")
                 self.state = State.TRANSLATING
 
         # If TRANSLATING, then send target_language and source_string to translator node
         if self.state is State.TRANSLATING:
+            # self.get_logger().warn("HERE! TRANSLATING STATE")
             # Change the target language of the translator
             req = TranslateString.Request()
             req.input = self.target_language
@@ -155,12 +155,18 @@ class Polyglotbot(Node):
     # SERVICE CALLBACKS
     #
     async def start_translating_callback(self, request, response):
-        self.get_logger().info("Polyglotbot beginnig translation...")
+        self.get_logger().info("Polyglotbot beginning translation...")
         self.state = State.SCANNING
         req = GetCharacters.Request()
         result = await self.cli_get_characters.call_async(req)
-        self.target_language = result.words[0]
-        self.source_string = result.words[1]
+        # Test to make sure that both a target_language and source_string are identified
+        try:
+            self.target_language = result.words[0]
+            self.source_string = result.words[1]
+        # Go back to the WAITING state if test fails
+        except Exception as e:
+            self.get_logger().warn("Failed to identify a target_language and source_string")
+            self.state = State.WAITING
         return response
 
     #
@@ -168,6 +174,9 @@ class Polyglotbot(Node):
     #
     def future_target_language_callback(self, future_target_language):
         self.get_logger().info("%s" % future_target_language.result().output)
+        if future_target_language.result().output == "INVALID LANGUAGE":
+            self.state = State.COMPLETE
+            return
         # Send the source string to the translator node
         req = TranslateString.Request()
         req.input = self.source_string

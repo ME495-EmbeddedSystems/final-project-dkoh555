@@ -83,6 +83,7 @@ class Translator(Node):
 
     def target_language_callback(self, request, response):
         # Test the target language to ensure that it is supported
+        # self.get_logger().warn("HERE! 3")
         try:
             test = self.translator.translate(
                 text="testing testing", src="en", dest=request.input
@@ -93,6 +94,7 @@ class Translator(Node):
             response.output = "INVALID LANGUAGE"
             return response
 
+        # self.get_logger().warn("HERE! 2")
         self.target_language = request.input
 
         if self.input_string is not None:
@@ -103,6 +105,7 @@ class Translator(Node):
         return response
 
     def input_string_callback(self, request, response):
+        # self.get_logger().warn("HERE! 1")
         # Takes note of the source language and translated message
         self.source_lang = self.translator.detect(request.input).lang
         self.input_string = request.input
