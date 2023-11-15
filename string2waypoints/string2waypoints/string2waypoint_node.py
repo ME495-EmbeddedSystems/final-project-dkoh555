@@ -5,6 +5,8 @@ from matplotlib.textpath import TextPath
 from polyglotbot_interfaces.srv import StringToWaypoint
 import numpy as np
 from geometry_msgs.msg import Point
+import os
+from ament_index_python.packages import get_package_share_directory
 
 class CreateWaypoint(Node):
     def __init__(self):
@@ -31,18 +33,22 @@ class CreateWaypoint(Node):
     def str2waypoint(self, string, language):
         #Prepare for different languages
         #Need to upload to main package and create package share paths
+        package_name = "string2waypoints"
+        package_share_directory = get_package_share_directory(package_name)
+
+
         if language == 'zh-CN':
-            fontPath = "/home/kashedd/fpws/src/fp/final-project-dkoh555/string2waypoints/Fonts/Noto_Sans_SC/NotoSansSC-VariableFont_wght.ttf"
+            fontPath = package_share_directory + "/NotoSansSC-VariableFont_wght.ttf"
         elif language == 'zh-TW':
-            fontPath="/home/kashedd/fpws/src/fp/final-project-dkoh555/string2waypoints/Fonts/Noto_Sans_TC/NotoSansTC-VariableFont_wght.ttf"
+            fontPath = package_share_directory + "/NotoSansTC-VariableFont_wght.ttf"
         elif language == 'ja':
-            fontPath="/home/kashedd/fpws/src/fp/final-project-dkoh555/string2waypoints/Fonts/Noto_Sans_JP/NotoSansJP-VariableFont_wght.ttf"
+            fontPath = package_share_directory + "/NotoSansJP-VariableFont_wght.ttf"
         elif language == 'ko':
-            fontPath="/home/kashedd/fpws/src/fp/final-project-dkoh555/string2waypoints/Fonts/Noto_Sans_KR/NotoSansKR-VariableFont_wght.ttf"
+            fontPath = package_share_directory + "/NotoSansKR-VariableFont_wght.ttf"
         elif language == 'iw' or language == 'yi':
-            fontPath="/home/kashedd/fpws/src/fp/final-project-dkoh555/string2waypoints/Fonts/Noto_Sans_Hebrew/NotoSansHebrew-VariableFont_wdth,wght.ttf"
+            fontPath = package_share_directory + "/NotoSansHebrew-VariableFont_wdth,wght.ttf"
         else:
-            fontPath="/home/kashedd/fpws/src/fp/final-project-dkoh555/string2waypoints/Fonts/Roboto/Roboto-Thin.ttf"
+            fontPath = package_share_directory + "/Roboto-Thin.ttf"
 
         #Create FontProperties object with "custom" google font
         customFont = FontProperties(fname=fontPath)

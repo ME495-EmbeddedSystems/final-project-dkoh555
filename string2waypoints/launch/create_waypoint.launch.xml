@@ -1,0 +1,3 @@
+<launch>
+    <node pkg="string2waypoints" exec="create_waypoint" name="create_waypoint" />
+</launch>
