@@ -31,6 +31,24 @@ class GetAprilTags(Node):
         self.tf_listener = TransformListener(self.tf_buffer, self)
         self.tf_broadcaster = TransformBroadcaster(self)
 
+        # Make static transform between camera_color_optical frame and panda_hand
+        self.tf_static_broadcaster = StaticTransformBroadcaster(self)
+        
+        # self.broadcast_static_transform()
+        # Camera in the frame of the hand
+        hand_camera_tf = TransformStamped()
+        hand_camera_tf.header.stamp = self.get_clock().now().to_msg()
+        hand_camera_tf.header.frame_id = "panda_hand"
+        hand_camera_tf.child_frame_id = "camera_link"
+
+        hand_camera_tf.transform.translation.x = 0.50
+        hand_camera_tf.transform.translation.y = 0.0
+        hand_camera_tf.transform.translation.z = 0.65
+
+        hand_camera_tf.transform.rotation.x = Quaternion(x=0.0, y=0.0, z=0.7071068, w=0.7071068)
+
+        self.tf_static_broadcaster.sendTransform(hand_camera_tf)
+
 # 3 is top left, 4 is bottom left, 1 is bottom right
 #########################################################################################################################
     def timer_callback(self):
@@ -43,13 +61,12 @@ class GetAprilTags(Node):
                     "camera_color_optical_frame", # /tf publishes camera_color_optical_frame, not camera link. But camera_link is root. Unsure which to use.
                     rclpy.time.Time())
                 
+                position_3 = (t.transform.translation.x, t.transform.translation.y, t.transform.translation.z)
+                orientation_3 = Quaternion(t.transform.rotation.x, t.transform.rotation.y, t.transform.rotation.z, t.transform.rotation.w)
 
+                # posi_info = f"Position: {t.transform.translation.x, t.transform.translation.y, t.transform.translation.z}"
 
-                pose_info = f"Position: {t.transform.translation.x, t.transform.translation.y, t.transform.translation.z}"
-
-
-
-                # self.get_logger().info("\n" + pose_info + "\n")
+                self.get_logger().info("\n" + f"{position_3[2]}" + "\n")
 
 
             except TransformException as ex:
@@ -60,6 +77,24 @@ class GetAprilTags(Node):
             
             
 #########################################################################################################################
+
+# def broadcast_static_transform(self):
+
+#     # Camera in the frame of the hand
+#     hand_camera_tf = TransformStamped()
+#     hand_camera_tf.header.stamp = self.get_clock().now().to_msg()
+#     hand_camera_tf.header.frame_id = "panda_hand"
+#     hand_camera_tf.child_frame_id = "camera_color_optical_frame"
+
+#     hand_camera_tf.transform.translation.x = 0.50
+#     hand_camera_tf.transform.translation.y = 0.0
+#     hand_camera_tf.transform.translation.z = 0.65
+
+#     hand_camera_tf.transform.rotation.x = Quaternion(x=0.0, y=0.0, z=0.7071068, w=0.7071068)
+
+#     self.tf_static_broadcaster.sendTransform(hand_camera_tf)
+
+
     
 def get_apriltags_entry(args=None):
     rclpy.init(args=args)
