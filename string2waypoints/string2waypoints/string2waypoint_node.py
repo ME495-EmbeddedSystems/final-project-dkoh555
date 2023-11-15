@@ -46,7 +46,7 @@ class CreateWaypoint(Node):
         elif language == 'ko':
             fontPath = package_share_directory + "/NotoSansKR-VariableFont_wght.ttf"
         elif language == 'iw' or language == 'yi':
-            fontPath = package_share_directory + "/NotoSansHebrew-VariableFont_wdth,wght.ttf"
+            fontPath = package_share_directory + "/gNotoSansHebrew-VariableFont_wdth,wght.ttf"
         else:
             fontPath = package_share_directory + "/Roboto-Thin.ttf"
 
