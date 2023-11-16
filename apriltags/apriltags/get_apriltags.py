@@ -66,8 +66,8 @@ class GetAprilTags(Node):
         if self.state == State.LOOK_UP_TRANSFORM:
             try:
                 t = self.tf_buffer.lookup_transform(
-                    "tag36h11:3",
-                    "camera_color_optical_frame",  # /tf publishes camera_color_optical_frame, not camera link. But camera_link is root. Unsure which to use.
+                    "panda_hand",
+                    "panda_link0",  # /tf publishes camera_color_optical_frame, not camera link. But camera_link is root. Unsure which to use.
                     rclpy.time.Time(),
                 )
 

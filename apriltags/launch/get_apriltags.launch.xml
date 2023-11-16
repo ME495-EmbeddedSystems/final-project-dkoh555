@@ -7,6 +7,8 @@
     <include file="$(find-pkg-share realsense2_camera)/launch/rs_launch.py">
         <arg name="depth_module.profile" value="1280x720x30" />
         <arg name="pointcloud.enable" value="true" />
+        <!-- <arg name="publish_tf" value="true" /> -->
+        <!-- <arg name="tf_publish_rate" value="30.0" /> -->
 
     </include>
 
@@ -17,7 +19,7 @@
 
 
         <remap from="/camera_info" to="/camera/color/camera_info" />
-        <remap from="/image_rect" to="/camera/color/image_raw" />
+        <remap from="/image_rect/compressed" to="/camera/color/image_raw/compressed" />
     </node>
 
     <group if="$(var use_rviz)">
