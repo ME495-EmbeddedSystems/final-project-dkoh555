@@ -21,6 +21,7 @@ rosidl_generate_interfaces(${PROJECT_NAME}
   "srv/Path.srv"
   "srv/Write.srv"
   "msg/CharacterPath.msg"
+  "msg/AprilCoords.msg"
   "srv/StringToWaypoint.srv"
   DEPENDENCIES
   std_msgs
