@@ -10,6 +10,10 @@ from geometry_msgs.msg import Quaternion, Pose, TransformStamped, Point
 from shape_msgs.msg import SolidPrimitive
 from .move_robot import MoveRobot
 from enum import Enum, auto
+import numpy as np
+from geometry_msgs.msg import Vector3
+
+
 
 
 class State(Enum):
@@ -71,28 +75,51 @@ class GetAprilTags(Node):
                     rclpy.time.Time(),
                 )
 
-                position_3 = (
-                    t.transform.translation.x,
-                    t.transform.translation.y,
-                    t.transform.translation.z,
-                )
-                orientation_3 = Quaternion(
-                    x=t.transform.rotation.x,
-                    y=t.transform.rotation.y,
-                    z=t.transform.rotation.z,
-                    w=t.transform.rotation.w,
-                )
+                self.position_1 = t.transform.translation
+                self.rotation_1 = t.transform.rotation
 
-                # posi_info = f"Position: {t.transform.translation.x, t.transform.translation.y, t.transform.translation.z}"
+                # self.get_logger().info(f"{self.position_1}")
+                # self.get_logger().info(f"{self.rotation_1}")
 
-                self.get_logger().info("\n" + f"{position_3[2]}" + "\n")
-
+        
             except TransformException as ex:
                 self.get_logger().info(
-                    f'Could not transform {"tag36h11:3"} to {"camera_color_optical_frame"}: {ex}',
+                    f'Could not transform {"panda_link0"} to {"panda_hand"}: {ex}',
                     once=True,
                 )
                 return
+            
+        
+            try:
+                s = self.tf_buffer.lookup_transform(
+                    "tag36h11:3",
+                    "panda_hand",
+                    rclpy.time.Time(),
+                )
+
+                self.position_2 = s.transform.translation
+                self.rotation_2 = s.transform.rotation
+
+                # self.get_logger().info(f"{self.position_2}")
+                # self.get_logger().info(f"{self.rotation_2}")
+
+
+
+            except TransformException as ex:
+                self.get_logger().info(
+                    f'Could not transform {"panda_hand"} to {"tag36h11:3"}: {ex}',
+                    once=True,
+                )
+                return
+            
+            t_0_h = self.matrix_from_rot_and_trans(self.rotation_1, self.position_1)
+            t_h_tag = self.matrix_from_rot_and_trans(self.rotation_2, self.position_2)
+
+            t_0_tag = np.matmul(t_0_h, t_h_tag) 
+
+            self.get_logger().info(f"{t_0_tag}")
+
+            
 
 
 #########################################################################################################################
@@ -112,6 +139,49 @@ class GetAprilTags(Node):
 #     hand_camera_tf.transform.rotation.x = Quaternion(x=0.0, y=0.0, z=0.7071068, w=0.7071068)
 
 #     self.tf_static_broadcaster.sendTransform(hand_camera_tf)
+
+    def matrix_from_rot_and_trans(self, rotation: Quaternion, translation: Vector3):
+        """
+        Construct the transformation matrix from rotation and translation.
+
+        Args:
+        ----
+            rotation (Quaternion): Quaternion object representing the rotation
+            translation (Point): Point object representing the
+
+        Returns:
+        -------
+            numpy.ndarray: The resulting homogenous transformation matrix.
+
+        """
+        # Extract the values from Q and T
+        q0 = rotation.x
+        q1 = rotation.y
+        q2 = rotation.z
+        q3 = rotation.w
+
+        px = translation.x
+        py = translation.y
+        pz = translation.z
+
+        # First row of the rotation matrix
+        r00 = 2.0 * (q0 * q0 + q1 * q1) - 1.0
+        r01 = 2.0 * (q1 * q2 - q0 * q3)
+        r02 = 2.0 * (q1 * q3 + q0 * q2)
+
+        # Second row of the rotation matrix
+        r10 = 2.0 * (q1 * q2 + q0 * q3)
+        r11 = 2.0 * (q0 * q0 + q2 * q2) - 1.0
+        r12 = 2.0 * (q2 * q3 - q0 * q1)
+
+        # Third row of the rotation matrix
+        r20 = 2.0 * (q1 * q3 - q0 * q2)
+        r21 = 2.0 * (q2 * q3 + q0 * q1)
+        r22 = 2.0 * (q0 * q0 + q3 * q3) - 1.0
+
+        return np.array(
+            [[r00, r01, r02, px], [r10, r11, r12, py], [r20, r21, r22, pz], [0.0, 0.0, 0.0, 1.0]]
+        )
 
 
 def get_apriltags_entry(args=None):
