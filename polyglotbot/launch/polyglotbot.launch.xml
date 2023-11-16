@@ -8,7 +8,7 @@
 
     <include file="$(find-pkg-share string2waypoints)/create_waypoint.launch.xml" />
 
-    <include file="$(find-pkg-share write_letters)/writer.launch.xml" >
+    <include file="$(find-pkg-share write_letters)/writer.launch.xml">
         <arg name="hardware_type" value="real" />
     </include>
 
