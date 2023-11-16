@@ -12,6 +12,11 @@ from .move_robot import MoveRobot
 from enum import Enum, auto
 import numpy as np
 from geometry_msgs.msg import Vector3
+from std_srvs.srv import Empty
+from rclpy.callback_groups import ReentrantCallbackGroup
+from polyglotbot_interfaces.msg import AprilCoords
+
+
 
 
 
@@ -29,6 +34,7 @@ class GetAprilTags(Node):
         super().__init__("get_apriltags")
 
         self.state = State.LOOK_UP_TRANSFORM
+        self.cb_group = ReentrantCallbackGroup()
 
         self.timer = self.create_timer(1.0 / 100.0, self.timer_callback)
 
@@ -55,33 +61,47 @@ class GetAprilTags(Node):
         hand_camera_tf.transform.translation.y = 15e-3
         hand_camera_tf.transform.translation.z = 65e-3
 
-        # hand_camera_tf.transform.rotation = Quaternion(
-        #     x=0.8320387, y=-0.0052696, z=0.5546925, w=-0.0000832
-        # )
+        
         hand_camera_tf.transform.rotation = Quaternion(
             x=0.7071068, y=0.0, z=0.7071068, w=0.0
         )
 
         self.tf_static_broadcaster.sendTransform(hand_camera_tf)
 
+        # Call calibrate service immediately after lauching node
+        self.client_calibrate = self.create_client(
+            Empty, "calibrate", callback_group=self.cb_group
+        )
+
+        if not self.client_calibrate.wait_for_service(timeout_sec=6.0):
+            raise RuntimeError("Service 'calibrate' not available")
+        
+        self.client_calibrate.call_async(Empty.Request())
+
+        self.publish_april_coords = self.create_publisher(AprilCoords, 'april_tag_coords', 10)
+
+        self.top_left_position = []
+        self.bottom_left_position = []
+        self.bottom_right_position = []
+
     # 3 is top left, 4 is bottom left, 1 is bottom right
     #########################################################################################################################
     def timer_callback(self):
+
+        # Publish the x,y,z of each AprilTag
         if self.state == State.LOOK_UP_TRANSFORM:
+
+            ### PANDA HAND
             try:
                 t = self.tf_buffer.lookup_transform(
                     "panda_hand",
-                    "panda_link0",  # /tf publishes camera_color_optical_frame, not camera link. But camera_link is root. Unsure which to use.
+                    "panda_link0",
                     rclpy.time.Time(),
                 )
 
                 self.position_1 = t.transform.translation
                 self.rotation_1 = t.transform.rotation
 
-                # self.get_logger().info(f"{self.position_1}")
-                # self.get_logger().info(f"{self.rotation_1}")
-
-        
             except TransformException as ex:
                 self.get_logger().info(
                     f'Could not transform {"panda_link0"} to {"panda_hand"}: {ex}',
@@ -89,7 +109,7 @@ class GetAprilTags(Node):
                 )
                 return
             
-        
+            ### TOP LEFT
             try:
                 s = self.tf_buffer.lookup_transform(
                     "tag36h11:3",
@@ -100,10 +120,14 @@ class GetAprilTags(Node):
                 self.position_2 = s.transform.translation
                 self.rotation_2 = s.transform.rotation
 
-                # self.get_logger().info(f"{self.position_2}")
-                # self.get_logger().info(f"{self.rotation_2}")
+                t_0_h = self.matrix_from_rot_and_trans(self.rotation_1, self.position_1)
+                t_h_tag = self.matrix_from_rot_and_trans(self.rotation_2, self.position_2)
 
+                t_0_top_left = np.matmul(t_0_h, t_h_tag)
+                self.top_left_position = t_0_top_left[:3, 3]
 
+                # self.get_logger().info(f"{t_0_top_left}")
+                # self.get_logger().info(f"{self.top_left_position}")
 
             except TransformException as ex:
                 self.get_logger().info(
@@ -112,12 +136,78 @@ class GetAprilTags(Node):
                 )
                 return
             
-            t_0_h = self.matrix_from_rot_and_trans(self.rotation_1, self.position_1)
-            t_h_tag = self.matrix_from_rot_and_trans(self.rotation_2, self.position_2)
+            ### BOTTOM LEFT
+            try:
+                s = self.tf_buffer.lookup_transform(
+                    "tag36h11:4",
+                    "panda_hand",
+                    rclpy.time.Time(),
+                )
 
-            t_0_tag = np.matmul(t_0_h, t_h_tag) 
+                self.position_2 = s.transform.translation
+                self.rotation_2 = s.transform.rotation
 
-            self.get_logger().info(f"{t_0_tag}")
+                t_0_h = self.matrix_from_rot_and_trans(self.rotation_1, self.position_1)
+                t_h_tag = self.matrix_from_rot_and_trans(self.rotation_2, self.position_2)
+
+                t_0_bottom_left = np.matmul(t_0_h, t_h_tag)
+                self.bottom_left_position = t_0_bottom_left[:3, 3]
+
+                self.get_logger().info(f"{t_0_bottom_left}")
+                self.get_logger().info(f"{self.bottom_left_position}")
+
+            except TransformException as ex:
+                self.get_logger().info(
+                    f'Could not transform {"panda_hand"} to {"tag36h11:4"}: {ex}',
+                    once=True,
+                )
+                return
+            
+            ### BOTTOM RIGHT
+            try:
+                s = self.tf_buffer.lookup_transform(
+                    "tag36h11:1",
+                    "panda_hand",
+                    rclpy.time.Time(),
+                )
+
+                self.position_2 = s.transform.translation
+                self.rotation_2 = s.transform.rotation
+
+                t_0_h = self.matrix_from_rot_and_trans(self.rotation_1, self.position_1)
+                t_h_tag = self.matrix_from_rot_and_trans(self.rotation_2, self.position_2)
+
+                t_0_bottom_right = np.matmul(t_0_h, t_h_tag)
+                self.bottom_right_position = t_0_top_left[:3, 3]
+
+                # self.get_logger().info(f"{t_0_bottom_right}")
+                # self.get_logger().info(f"{self.bottom_right_position}")
+
+            except TransformException as ex:
+                self.get_logger().info(
+                    f'Could not transform {"panda_hand"} to {"tag36h11:1"}: {ex}',
+                    once=True,
+                )
+                return
+            
+            
+
+
+
+
+
+
+            if any(self.top_left_position) and any(self.bottom_left_position) and any(self.bottom_right_position):
+                msg = AprilCoords()
+                msg.p1 = Point(x = self.top_left_position[0],y = self.top_left_position[1],z = self.top_left_position[2])
+                msg.p2 = Point(x = self.bottom_left_position[0],y = self.bottom_left_position[1],z = self.bottom_left_position[2])
+                msg.p3 = Point(x = self.bottom_right_position[0],y = self.bottom_right_position[1],z = self.bottom_right_position[2])
+
+                self.publish_april_coords.publish(msg)
+
+
+
+            
 
             
 
