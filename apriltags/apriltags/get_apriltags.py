@@ -1,3 +1,4 @@
+import numpy as np
 import rclpy
 from rclpy.node import Node
 
@@ -10,6 +11,50 @@ from geometry_msgs.msg import Quaternion, Pose, TransformStamped, Point
 from shape_msgs.msg import SolidPrimitive
 from .move_robot import MoveRobot
 from enum import Enum, auto
+
+
+def matrix_from_rot_and_trans(rotation: Quaternion, translation: Point):
+    """
+    Construct the transformation matrix from rotation and translation.
+
+    Args:
+    ----
+        rotation (Quaternion): Quaternion object representing the rotation
+        translation (Point): Point object representing the
+
+    Returns:
+    -------
+        numpy.ndarray: The resulting homogenous transformation matrix.
+
+    """
+    # Extract the values from Q and T
+    q0 = rotation.x
+    q1 = rotation.y
+    q2 = rotation.z
+    q3 = rotation.w
+
+    px = translation.x
+    py = translation.y
+    pz = translation.z
+
+    # First row of the rotation matrix
+    r00 = 2 * (q0 * q0 + q1 * q1) - 1
+    r01 = 2 * (q1 * q2 - q0 * q3)
+    r02 = 2 * (q1 * q3 + q0 * q2)
+
+    # Second row of the rotation matrix
+    r10 = 2 * (q1 * q2 + q0 * q3)
+    r11 = 2 * (q0 * q0 + q2 * q2) - 1
+    r12 = 2 * (q2 * q3 - q0 * q1)
+
+    # Third row of the rotation matrix
+    r20 = 2 * (q1 * q3 - q0 * q2)
+    r21 = 2 * (q2 * q3 + q0 * q1)
+    r22 = 2 * (q0 * q0 + q3 * q3) - 1
+
+    return np.array(
+        [[r00, r01, r02, px], [r10, r11, r12, py], [r20, r21, r22, pz], [0, 0, 0, 1]]
+    )
 
 
 class State(Enum):
