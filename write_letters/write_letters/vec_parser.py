@@ -62,7 +62,7 @@ class VecParser(Node):
         if not self.client_points.wait_for_service(timeout_sec=2.0):
             raise RuntimeError("Service 'load_path' not available")
 
-        while not self.count_publishers("april_tag_coords") > 1:
+        while self.count_publishers("april_tag_coords") < 1:
             self.get_logger().info("Not receiving tag coords waiting again ...")
 
         # TODO: Make it parameter or get the value from april tags

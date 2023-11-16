@@ -19,7 +19,7 @@
 
 
         <remap from="/camera_info" to="/camera/color/camera_info" />
-        <remap from="/image_rect/compressed" to="/camera/color/image_raw/compressed" />
+        <remap from="/image_rect" to="/camera/color/image_raw" />
     </node>
 
     <group if="$(var use_rviz)">
