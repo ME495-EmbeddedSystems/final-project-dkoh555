@@ -43,7 +43,15 @@ On laptop run
 ```
 ros2 launch polyglotbot polyglotbot.launch.xml hardware_type:=real
 ```
-Launch Apriltag with
+
+### Use AprilTags
+
+Ensure you have:
+
+[RealSense ROS2](https://github.com/IntelRealSense/realsense-ros.git)
+
+
+Launch with
 
    ```
    ros2 launch apriltags get_apriltags.launch.xml
