@@ -1,4 +1,5 @@
 <launch>
+    <arg name="hardware_type" default="fake" />
 
     <node name="translator_node" pkg="translation_pkg" exec="translator_node" />
 
@@ -9,7 +10,7 @@
     <include file="$(find-pkg-share string2waypoints)/create_waypoint.launch.xml" />
 
     <include file="$(find-pkg-share write_letters)/writer.launch.xml">
-        <arg name="hardware_type" value="real" />
+        <arg name="hardware_type" value="$(var hardware_type)" />
     </include>
 
 </launch>

@@ -17,3 +17,29 @@ Import the **Mover API** via
 ```
 vcs import ${WorkSpace}/src < ${Repo_Dir}/mover.repos
 ```
+# Launch Instructions
+First, connect to `https://panda0.robot`, and activated the FCI
+
+**Copy SSH ID**
+
+If you have not already done so, copy your ssh key to station via
+```
+ssh-copy-id -i ~/.ssh/id_ed25519.pub student@station
+```
+
+**Connect the station**
+
+Connect to the station via
+```
+ssh student@station
+```
+
+On station run 
+```
+ros2 launch franka_moveit_config moveit.launch.py use_rviz:=false robot_ip:=panda0.robot
+```
+
+On laptop run
+```
+ros2 launch polyglotbot polyglotbot.launch.xml hardware_type:=real
+```

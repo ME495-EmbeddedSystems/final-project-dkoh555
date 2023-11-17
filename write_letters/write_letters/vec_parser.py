@@ -59,20 +59,14 @@ class VecParser(Node):
             qos_profile=10,
         )
 
-        self.sub_april_coords = self.create_subscription(
-            AprilCoords,
-            "april_tag_coords",
-            callback=self.sub_april_coords_callback,
-            qos_profile=10,
-        )
-
         while not self.client_points.wait_for_service(timeout_sec=2.0):
-            raise RuntimeError("Service 'load_path' not available")
+            # raise RuntimeError("Service 'load_path' not available")
+            # pass
+            self.get_logger().info(
+                "'load_path' service not available waiting again ..."
+            )
 
         while self.count_publishers("april_tag_coords") < 1:
-            self.get_logger().info("Not receiving tag coords waiting again ...")
-
-        while not self.count_publishers("april_tags_coords") > 1:
             self.get_logger().info("Not receiving tag coords waiting again ...")
 
         # TODO: Make it parameter or get the value from april tags
@@ -94,7 +88,7 @@ class VecParser(Node):
         self.april_2 = msg.p2
         self.april_3 = msg.p3
 
-        self.get_logger().info(f"{self.april_1}, {self.april_2}, {self.april_3}")
+        # self.get_logger().info(f"{self.april_1}, {self.april_2}, {self.april_3}")
 
     def srv_write_callback(self, request, response):
         """
@@ -115,6 +109,18 @@ class VecParser(Node):
         curr_z = 0.45
         self.points = []
 
+        p1 = np.array([self.april_1.x, self.april_1.y, self.april_1.z])
+        p2 = np.array([self.april_2.x, self.april_2.y, self.april_2.z])
+        p3 = np.array([self.april_3.x, self.april_3.y, self.april_3.z])
+
+        v1 = p3 - p1
+        v2 = p2 - p1
+
+        cp = np.cross(v1, v2)
+        a, b, c = cp
+
+        d = np.dot(cp, p3)
+
         for character in request.characters:
             # self.get_logger().info("START")
 
@@ -132,8 +138,11 @@ class VecParser(Node):
                 max_y = max(max_y, py)
 
                 x_pos = -(curr_x + px)
-                y_pos = -self.offset
                 z_pos = py + curr_z
+
+                y_val = (d - a * x_pos - c * z_pos) / b
+                self.get_logger().info(f"Y offset: {y_val}")
+                y_pos = y_val + 0.2
 
                 if not has_stand_down:
                     self.points.append(
@@ -142,6 +151,12 @@ class VecParser(Node):
                     has_stand_down = True
 
                 self.points.append(Point(x=x_pos, y=y_pos, z=z_pos))
+
+                if point.z == 1.0:
+                    self.points.append(
+                        Point(x=x_pos, y=y_pos + self.offset_standup, z=z_pos)
+                    )
+                    has_stand_down = False
 
             self.points.append(Point(x=x_pos, y=y_pos + self.offset_standup, z=z_pos))
             curr_x += max_x + self.offset_letter
@@ -157,7 +172,7 @@ class VecParser(Node):
         self.get_logger().info(f"max x: {curr_x}")
         self.points.append(Point(x=0.3, y=0.0, z=0.5))
         future = self.client_points.call_async(Path.Request(points=self.points))
-        self.get_logger().info(f"{self.points}")
+        # self.get_logger().info(f"{self.points}")
         # rclpy.spin_until_future_complete(self, future)
         future.add_done_callback(self.path_future_callback)
 
@@ -166,7 +181,7 @@ class VecParser(Node):
         return response
 
     def path_future_callback(self, future_path: Future):
-        self.get_logger().info(f"{future_path.result()}")
+        self.get_logger().info(f"Path Result: {future_path.result()}")
 
 
 def main(args=None):

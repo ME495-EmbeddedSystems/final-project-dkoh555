@@ -48,11 +48,11 @@ class State(Enum):
     DONE = auto()  # Do nothing
 
 
-class Picker(Node):
+class Writer(Node):
     """Controlling the robot to move and pickup a paper and drop it."""
 
     def __init__(self):
-        super().__init__("picker")
+        super().__init__("writer")
 
         self.declare_parameter(
             "move_group_name",
@@ -205,12 +205,7 @@ class Picker(Node):
             #     quat = self.robot.angle_axis_to_quaternion(math.pi, [1.0, 0.0, 0.0])
             if i < len(self.points) - 1:
                 q = self.robot.angle_axis_to_quaternion(self.theta, self.rotation_axis)
-                quat = self.robot.quaternion_mult(
-                    q0=q,
-                    q1=self.robot.angle_axis_to_quaternion(
-                        math.pi / 2, [0.0, 0.0, 1.0]
-                    ),
-                )
+                quat = self.robot.angle_axis_to_quaternion(math.pi, [-1, 1, 0])
             else:
                 quat = self.robot.angle_axis_to_quaternion(math.pi, [1.0, 0.0, 0.0])
 
@@ -224,6 +219,8 @@ class Picker(Node):
 
         self.pos_list = self.points
         self.ori_list = self.quats
+
+        self.get_logger().info(f"Poses: {self.poses}")
 
         if self.state == State.DONE:
             response.success = True
@@ -333,10 +330,10 @@ def main(args=None):
 
     """
     rclpy.init(args=args)
-    node_picker = Picker()
-    rclpy.spin(node=node_picker)
+    node_writer = Writer()
+    rclpy.spin(node=node_writer)
 
-    node_picker.destroy_node()
+    node_writer.destroy_node()
     rclpy.shutdown()
 
 
