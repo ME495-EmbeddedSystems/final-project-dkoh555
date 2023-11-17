@@ -43,3 +43,8 @@ On laptop run
 ```
 ros2 launch polyglotbot polyglotbot.launch.xml hardware_type:=real
 ```
+Launch Apriltag with
+
+   ```
+   ros2 launch apriltags get_apriltags.launch.xml
+   ```
