@@ -12,6 +12,7 @@
 
     </include>
 
+    <include file="$(find-pkg-share image_proc)/launch/image_proc.launc.py" />
 
     <include file="$(find-pkg-share image_proc)/launch/image_proc.launch.py"/>
 

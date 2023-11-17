@@ -79,7 +79,6 @@ class GetAprilTags(Node):
     def timer_callback(self):
         # Publish the x,y,z of each AprilTag
         if self.state == State.LOOK_UP_TRANSFORM:
-
             ### TOP LEFT
             try:
                 t = self.tf_buffer.lookup_transform(
@@ -91,7 +90,9 @@ class GetAprilTags(Node):
                 self.position_TL = t.transform.translation
                 self.rotation_TL = t.transform.rotation
 
-                self.T_0_TL = self.matrix_from_rot_and_trans(self.rotation_TL, self.position_TL)
+                self.T_0_TL = self.matrix_from_rot_and_trans(
+                    self.rotation_TL, self.position_TL
+                )
                 self.top_left_position = self.T_0_TL[:3, 3]
 
                 # self.get_logger().info(f"{self.T_0_TL}")
@@ -102,7 +103,7 @@ class GetAprilTags(Node):
                     once=True,
                 )
                 return
-            
+
             ### BOTTOM LEFT
             try:
                 t = self.tf_buffer.lookup_transform(
@@ -114,7 +115,9 @@ class GetAprilTags(Node):
                 self.position_BL = t.transform.translation
                 self.rotation_BL = t.transform.rotation
 
-                self.T_0_BL = self.matrix_from_rot_and_trans(self.rotation_BL, self.position_BL)
+                self.T_0_BL = self.matrix_from_rot_and_trans(
+                    self.rotation_BL, self.position_BL
+                )
                 self.bottom_left_position = self.T_0_BL[:3, 3]
 
                 # self.get_logger().info(f"{self.T_0_BL}")
@@ -125,7 +128,7 @@ class GetAprilTags(Node):
                     once=True,
                 )
                 return
-            
+
             ### BOTTOM RIGHT
             try:
                 t = self.tf_buffer.lookup_transform(
@@ -137,7 +140,9 @@ class GetAprilTags(Node):
                 self.position_BR = t.transform.translation
                 self.rotation_BR = t.transform.rotation
 
-                self.T_0_BR = self.matrix_from_rot_and_trans(self.rotation_BR, self.position_BR)
+                self.T_0_BR = self.matrix_from_rot_and_trans(
+                    self.rotation_BR, self.position_BR
+                )
                 self.bottom_right_position = self.T_0_BR[:3, 3]
 
                 # self.get_logger().info(f"{self.T_0_BR}")
