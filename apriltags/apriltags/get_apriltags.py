@@ -20,6 +20,7 @@ class State(Enum):
     LOOK_UP_TRANSFORM = auto()
     ADD_BOX = auto()
 
+
 class GetAprilTags(Node):
     """Gets April Tag information"""
 
@@ -160,23 +161,122 @@ class GetAprilTags(Node):
                 and any(self.bottom_right_position)
             ):
                 msg = AprilCoords()
-                msg.p1 = Point(
-                    x=self.top_left_position[0],
-                    y=self.top_left_position[1],
-                    z=self.top_left_position[2],
-                )
-                msg.p2 = Point(
-                    x=self.bottom_left_position[0],
-                    y=self.bottom_left_position[1],
-                    z=self.bottom_left_position[2],
-                )
-                msg.p3 = Point(
-                    x=self.bottom_right_position[0],
-                    y=self.bottom_right_position[1],
-                    z=self.bottom_right_position[2],
-                )
+                msg.p1 = self.p1
+                msg.p2 = self.p2
+                msg.p3 = self.p3
 
                 self.publish_april_coords.publish(msg)
+
+            # ### TOP LEFT
+            # try:
+            #     s1 = self.tf_buffer.lookup_transform(
+            #         "tag36h11:3",
+            #         "panda_hand",
+            #         rclpy.time.Time(),
+            #     )
+
+            #     position_s1 = s1.transform.translation
+            #     rotation_s1 = s1.transform.rotation
+
+            #     t_0_h_s1 = self.matrix_from_rot_and_trans(
+            #         self.rotation_hand, self.position_hand
+            #     )
+            #     t_h_tag_s1 = self.matrix_from_rot_and_trans(rotation_s1, position_s1)
+
+            #     t_0_top_left = np.matmul(t_0_h_s1, t_h_tag_s1)
+            #     self.top_left_position = t_0_top_left[:3, 3]
+
+            #     # self.get_logger().info(f"{t_0_top_left}")
+            #     # self.get_logger().info(f"{self.top_left_position}")
+
+            # except TransformException as ex:
+            #     self.get_logger().info(
+            #         f'Could not transform {"panda_hand"} to {"tag36h11:3"}: {ex}',
+            #         once=True,
+            #     )
+            #     return
+
+            # ### BOTTOM LEFT
+            # try:
+            #     s2 = self.tf_buffer.lookup_transform(
+            #         "tag36h11:4",
+            #         "panda_hand",
+            #         rclpy.time.Time(),
+            #     )
+
+            #     position_s2 = s2.transform.translation
+            #     rotation_s2 = s2.transform.rotation
+
+            #     t_0_h_s2 = self.matrix_from_rot_and_trans(
+            #         self.rotation_hand, self.position_hand
+            #     )
+            #     t_h_tag_s2 = self.matrix_from_rot_and_trans(rotation_s2, position_s2)
+
+            #     t_0_bottom_left = np.matmul(t_0_h_s2, t_h_tag_s2)
+            #     self.bottom_left_position = t_0_bottom_left[:3, 3]
+
+            #     # self.get_logger().info(f"{t_0_bottom_left}")
+            #     # self.get_logger().info(f"{self.bottom_left_position}")
+
+            # except TransformException as ex:
+            #     self.get_logger().info(
+            #         f'Could not transform {"panda_hand"} to {"tag36h11:4"}: {ex}',
+            #         once=True,
+            #     )
+            #     return
+
+            # ### BOTTOM RIGHT
+            # try:
+            #     s3 = self.tf_buffer.lookup_transform(
+            #         "tag36h11:1",
+            #         "panda_hand",
+            #         rclpy.time.Time(),
+            #     )
+
+            #     position_s3 = s3.transform.translation
+            #     rotation_s3 = s3.transform.rotation
+
+            #     t_0_h_s3 = self.matrix_from_rot_and_trans(
+            #         self.rotation_hand, self.position_hand
+            #     )
+            #     t_h_tag_s3 = self.matrix_from_rot_and_trans(rotation_s3, position_s3)
+
+            #     t_0_bottom_right = np.matmul(t_0_h_s3, t_h_tag_s3)
+            #     self.bottom_right_position = t_0_bottom_right[:3, 3]
+
+            #     # self.get_logger().info(f"{t_0_bottom_right}")
+            #     # self.get_logger().info(f"{self.bottom_right_position}")
+
+            # except TransformException as ex:
+            #     self.get_logger().info(
+            #         f'Could not transform {"panda_hand"} to {"tag36h11:1"}: {ex}',
+            #         once=True,
+            #     )
+            #     return
+
+            # if (
+            #     any(self.top_left_position)
+            #     and any(self.bottom_left_position)
+            #     and any(self.bottom_right_position)
+            # ):
+            #     msg = AprilCoords()
+            #     msg.p1 = Point(
+            #         x=self.top_left_position[0],
+            #         y=self.top_left_position[1],
+            #         z=self.top_left_position[2],
+            #     )
+            #     msg.p2 = Point(
+            #         x=self.bottom_left_position[0],
+            #         y=self.bottom_left_position[1],
+            #         z=self.bottom_left_position[2],
+            #     )
+            #     msg.p3 = Point(
+            #         x=self.bottom_right_position[0],
+            #         y=self.bottom_right_position[1],
+            #         z=self.bottom_right_position[2],
+            #     )
+
+            #     self.publish_april_coords.publish(msg)
 
     #########################################################################################################################
 
