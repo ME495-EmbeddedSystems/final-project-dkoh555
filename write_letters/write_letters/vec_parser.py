@@ -29,7 +29,7 @@ from rclpy.callback_groups import ReentrantCallbackGroup
 from geometry_msgs.msg import Point
 
 # services
-from polyglotbot_interfaces.srv import Path, Write
+from polyglotbot_interfaces.srv import Path, Write, SaveApril
 from polyglotbot_interfaces.msg import AprilCoords
 
 

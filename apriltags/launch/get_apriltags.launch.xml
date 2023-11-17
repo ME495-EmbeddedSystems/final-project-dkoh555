@@ -12,9 +12,7 @@
 
     </include>
 
-    <include file="$(find-pkg-share image_proc)/launch/image_proc.launc.py" />
-
-    <include file="$(find-pkg-share image_proc)/launch/image_proc.launch.py"/>
+    <include file="$(find-pkg-share image_proc)/launch/image_proc.launch.py" />
 
 
     <node pkg="apriltag_ros" exec="apriltag_node" name="apriltag_node">

@@ -20,9 +20,10 @@ rosidl_generate_interfaces(${PROJECT_NAME}
   "srv/TranslateString.srv"
   "srv/Path.srv"
   "srv/Write.srv"
+  "srv/StringToWaypoint.srv"
+  "srv/SaveApril.srv"
   "msg/CharacterPath.msg"
   "msg/AprilCoords.msg"
-  "srv/StringToWaypoint.srv"
   DEPENDENCIES
   std_msgs
   geometry_msgs

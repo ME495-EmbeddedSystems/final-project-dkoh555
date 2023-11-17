@@ -13,6 +13,8 @@ Parameters
 Services
 --------
     load_path: Load the path for the robot to follow
+    calibrate: Let the robot to move to the calibrate pose
+    homing: Let the robot to move to the home pose
 """
 import math
 import rclpy
@@ -139,6 +141,12 @@ class Writer(Node):
             callback=self.srv_calibrate_callback,
             callback_group=self.cb_group,
         )
+        self.srv_home = self.create_service(
+            Empty,
+            "home",
+            callback=self.srv_homing_callback,
+            callback_group=self.cb_group,
+        )
 
         self.comm_count = 0
         self.pos_list = [
@@ -166,7 +174,48 @@ class Writer(Node):
         self.quats: list[Quaternion] = None
         self.poses: list[Pose] = None
 
+    def srv_homing_callback(self, request, response):
+        """
+        Send the command to robot to go to the home pose.
+
+        Args:
+            request (Empty_Request): Request object of the homing service.
+            response (Empty_Response): Response object of the homoing service.
+
+        Returns:
+            Empty_Response: Response of the homing service.
+        """
+        self.poses = []
+
+        self.poses.append(
+            Pose(
+                position=Point(x=0.3, y=0.0, z=0.5),
+                orientation=self.robot.angle_axis_to_quaternion(
+                    math.pi, [1.0, 0.0, 0.0]
+                ),
+            )
+        )
+
+        self.get_logger().info("Homing ...")
+
+        if self.state == State.DONE:
+            self.comm_count = 0
+            self.state = State.MOVEARM
+            self.robot.state = MOVEROBOT_STATE.WAITING
+
+        return response
+
     def srv_calibrate_callback(self, request, response):
+        """
+        Send the command to robot to move to the calibration pose.
+
+        Args:
+            request (Empty_Request): Request object of the calibrate service.
+            response (Empty_Response): Response object of the calibrate service.
+
+        Returns:
+            Empty_Response: Response of the homing service.
+        """
         self.poses = []
 
         self.poses.append(
@@ -205,7 +254,7 @@ class Writer(Node):
             #     quat = self.robot.angle_axis_to_quaternion(math.pi, [1.0, 0.0, 0.0])
             if i < len(self.points) - 1:
                 q = self.robot.angle_axis_to_quaternion(self.theta, self.rotation_axis)
-                quat = self.robot.angle_axis_to_quaternion(math.pi, [-1, 1, 0])
+                quat = self.robot.angle_axis_to_quaternion(math.pi, [-1.0, 1.0, 0.0])
             else:
                 quat = self.robot.angle_axis_to_quaternion(math.pi, [1.0, 0.0, 0.0])
 
@@ -220,7 +269,7 @@ class Writer(Node):
         self.pos_list = self.points
         self.ori_list = self.quats
 
-        self.get_logger().info(f"Poses: {self.poses}")
+        self.get_logger().debug(f"Poses: {self.poses}")
 
         if self.state == State.DONE:
             response.success = True

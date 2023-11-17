@@ -13,6 +13,7 @@ from geometry_msgs.msg import Vector3
 from std_srvs.srv import Empty
 from rclpy.callback_groups import ReentrantCallbackGroup
 from polyglotbot_interfaces.msg import AprilCoords
+from polyglotbot_interfaces.srv import SaveApril
 
 
 class State(Enum):
@@ -62,10 +63,25 @@ class GetAprilTags(Node):
             Empty, "calibrate", callback_group=self.cb_group
         )
 
-        if not self.client_calibrate.wait_for_service(timeout_sec=6.0):
-            raise RuntimeError("Service 'calibrate' not available")
-
         self.client_calibrate.call_async(Empty.Request())
+
+        while not self.client_calibrate.wait_for_service(timeout_sec=2.0):
+            self.get_logger().info("Calibrate service not available, waiting again ...")
+
+        # while not self.tf_buffer.can_transform(
+        #     "tag36h11:1", "panda_link0", rclpy.time.Time()
+        # ):
+        #     self.get_logger().info("Could not get transform tag 1, waiting again ...")
+
+        # while not self.tf_buffer.can_transform(
+        #     "tag36h11:3", "panda_link0", rclpy.time.Time()
+        # ):
+        #     self.get_logger().info("Could not get transform tag 3, waiting again ...")
+
+        # while not self.tf_buffer.can_transform(
+        #     "tag36h11:4", "panda_link0", rclpy.time.Time()
+        # ):
+        #     self.get_logger().info("Could not get transform tag 4, waiting again ...")
 
         self.publish_april_coords = self.create_publisher(
             AprilCoords, "april_tag_coords", 10
@@ -77,6 +93,19 @@ class GetAprilTags(Node):
 
     # Tag 3 is top left, tag 4 is bottom left, tag 1 is bottom right
     #########################################################################################################################
+    def srv_save_april_callback(self, request, response):
+        if self.p1 and self.p2 and self.p3:
+            self.msg_pub = AprilCoords()
+            self.msg_pub.p1 = self.p1
+            self.msg_pub.p2 = self.p2
+            self.msg_pub.p3 = self.p3
+
+            response.success = True
+        else:
+            response.success = False
+
+        return response
+
     def timer_callback(self):
         # Publish the x,y,z of each AprilTag
         if self.state == State.LOOK_UP_TRANSFORM:
