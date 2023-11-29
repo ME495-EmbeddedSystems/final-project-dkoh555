@@ -22,7 +22,8 @@ setup(
     zip_safe=True,
     maintainer='Kassidy Shedd',
     maintainer_email='kass92800@gmail.com',
-    description='This node takes a string as an input and will output corresponding waypoints allowing the robot to write the string.',
+    description='This node takes a string as an input and will output corresponding waypoints'
+                'allowing the robot to write the string.',
     license='MIT',
     tests_require=['pytest'],
     entry_points={
