@@ -258,7 +258,7 @@ class Polyglotbot(Node):
     def future_get_characters_callback(self, future_get_characters):
         try:
             self.target_language = future_get_characters.result().words[0]
-            self.source_string = future_get_characters.result().words[1]
+            self.source_string = future_get_characters.result().words[0]
             self.state = State.TRANSLATING
         except Exception as e:
             # Go back to the WAITING state if test fails

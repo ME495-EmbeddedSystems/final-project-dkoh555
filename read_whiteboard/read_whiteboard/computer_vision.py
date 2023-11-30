@@ -101,19 +101,18 @@ class ComputerVision(Node):
 
         # print(self.frame)
         # self.get_logger().info(f"Got image: {self.frame}")
-        if self.frame is not None:
-            temp_frame = self.frame
+        temp_frame = self.frame
 
-            # results = self.model.predict(source=np.asanyarray(self.frame), stream=True, classes=[0])
-            results = self.model.predict(
-                source=temp_frame, stream=True, classes=[0], verbose=False
-            )
-            for result in results:
-                # self.get_logger().info(f"Results: {result.__len__()}")
-                # average num people across 20 frames (2 seconds)
-                self.num_people = np.delete(self.num_people, 0)
-                self.num_people = np.append(self.num_people, result.__len__())
-                self.average_num_people = np.average(self.num_people)
+        # results = self.model.predict(source=np.asanyarray(self.frame), stream=True, classes=[0])
+        results = self.model.predict(
+            source=temp_frame, stream=True, classes=[0], verbose=False
+        )
+        for result in results:
+            # self.get_logger().info(f"Results: {result.__len__()}")
+            # average num people across 20 frames (2 seconds)
+            self.num_people = np.delete(self.num_people, 0)
+            self.num_people = np.append(self.num_people, result.__len__())
+            self.average_num_people = np.average(self.num_people)
 
         self.person_detect.publish(Float32(data=self.average_num_people))
 

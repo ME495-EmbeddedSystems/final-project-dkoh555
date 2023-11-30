@@ -18,17 +18,8 @@
 
     <include file="$(find-pkg-share string2waypoints)/create_waypoint.launch.xml" />
 
-    <group>
-        <push-ros-namespace namespace="tag_detect" />
-        <include file="$(find-pkg-share apriltags)/get_apriltags.launch.xml">
-            <arg name="use_rviz" value="false" />
-            <arg name="cam_serial_no" value="_233522076213" />
-        </include>
-    </group>
-
     <include file="$(find-pkg-share write_letters)/writer.launch.xml">
-        <arg name="hardware_type" value="real" />
-        <arg name="remap_namespace" value="tag_detect/" />
+        <arg name="hardware_type" value="fake" />
     </include>
 
 </launch>

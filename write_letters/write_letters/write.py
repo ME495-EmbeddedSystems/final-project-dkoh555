@@ -242,7 +242,7 @@ class Picker(Node):
 
         # counter allows for only sending 1 goal position
 
-        # self.get_logger().info(f"State: {self.state}, Robot State: {self.robot.state}")
+        self.get_logger().info(f"State: {self.state}, Robot State: {self.robot.state}")
 
         if self.state == State.MOVEARM:
             if self.robot.state == MOVEROBOT_STATE.WAITING:
