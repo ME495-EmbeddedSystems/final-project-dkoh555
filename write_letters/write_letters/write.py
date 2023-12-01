@@ -60,7 +60,7 @@ class State(Enum):
     DONE = auto()  # Do nothing
 
 
-class Picker(Node):
+class Writer(Node):
     """Controlling the robot to move and pickup a paper and drop it."""
 
     def __init__(self):
@@ -490,7 +490,7 @@ def main(args=None):
 
     """
     rclpy.init(args=args)
-    node_writer = Picker()
+    node_writer = Writer()
     rclpy.spin(node=node_writer)
 
     node_writer.destroy_node()

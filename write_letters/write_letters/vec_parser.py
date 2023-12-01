@@ -16,6 +16,7 @@ Clients
 Subscriptions
 -------------
     april_tag_coords [AprilCoords]: The coordinate of all april tags.
+    writer_state [String]: The state of the writer node
 
 Returns
 -------
@@ -143,20 +144,26 @@ class VecParser(Node):
         # self.__send_points()
 
     def sub_writer_state_callback(self, msg: String):
+        """
+        Callback function for writer_state subscription
+
+        Args:
+        ----
+            msg (String): Message from writer_state topic
+        """
         self.writer_state = msg.data
 
     def sub_april_coords_callback(self, msg: AprilCoords):
-        # if (
-        #     self.writer_state == "State.DONE"
-        #     and not self.april_1
-        #     and not self.april_2
-        #     and not self.april_3
-        # ):
+        """
+        Callback function for april_coords subscription
+
+        Args:
+        ----
+            msg (AprilCoords): Message from april_coords topic
+        """
         self.april_1 = msg.p1
         self.april_2 = msg.p2
         self.april_3 = msg.p3
-
-        # self.get_logger().info(f"{self.april_1}, {self.april_2}, {self.april_3}")
 
     def srv_write_callback(self, request, response):
         """
@@ -267,6 +274,12 @@ class VecParser(Node):
         return response
 
     def path_future_callback(self, future_path: Future):
+        """
+        Callback function when the path service call is done
+
+        Args:
+            future_path (Future): Future object of the path service call
+        """
         self.get_logger().info(f"{future_path.result()}")
 
 

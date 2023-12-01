@@ -82,6 +82,17 @@ class Polyglotbot(Node):
             String, "writer_state", self.writer_state_callback, 10
         )
 
+        # PUBLISHERS
+        marker_qos = QoSProfile(
+            depth=10, durability=QoSDurabilityPolicy.TRANSIENT_LOCAL
+        )
+        self.markers = self.create_publisher(
+            Marker,
+            "visualization_marker",
+            qos_profile=marker_qos,
+            callback_group=self.cbgroup,
+        )
+
         # SERVICES
 
         # Create service for user to call to trigger polyglotbot to run
@@ -158,6 +169,37 @@ class Polyglotbot(Node):
         self.num_people = 0.0
         self.april_cords_received = False
         self.writer_state = ""
+        self.m: Marker = None
+
+    def add_person_detection(self, num_person):
+        self.m = Marker()
+        self.m.header.frame_id = "panda_link0"
+        self.m.header.stamp = self.get_clock().now().to_msg()
+        self.m.id = 15
+        self.m.type = Marker.TEXT_VIEW_FACING
+        self.m.action = Marker.ADD
+        self.m.scale.x = 0.2
+        self.m.scale.y = 0.1
+        self.m.scale.z = 0.1
+        self.m.text = f"Number of person: {num_person}"
+        self.m.lifetime.sec = 1
+        self.m.pose.position.x = 0.0
+        self.m.pose.position.y = 0.4
+        self.m.pose.position.z = 0.7
+        self.m.pose.orientation.x = 0.0
+        self.m.pose.orientation.y = 0.0
+        self.m.pose.orientation.z = 0.7071068
+        self.m.pose.orientation.w = 0.7071068
+        self.m.color.r = 1.0
+        self.m.color.g = 1.0
+        self.m.color.b = 1.0
+        self.m.color.a = 0.8
+        self.markers.publish(self.m)
+
+    def remove_person_detection(self):
+        if self.m:
+            self.m.action = Marker.DELETE
+            self.markers.publish(self.m)
 
     def timer_callback(self):
         """Control the Franka."""
@@ -284,7 +326,9 @@ class Polyglotbot(Node):
         self.num_people = msg.data
 
         if self.state == State.WAITING or self.state == State.PERSON:
-            self.get_logger().info(f"Number of people detected: {self.num_people}")
+            # self.remove_person_detection()
+            self.add_person_detection(self.num_people)
+            # self.get_logger().info(f"Number of people detected: {self.num_people}")
 
     # Service Callbacks
     # #############################################################################################################

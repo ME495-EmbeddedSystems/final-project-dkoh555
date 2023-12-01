@@ -27,6 +27,7 @@
     </group>
 
     <node pkg="write_letters" exec="parser" name="parser">
+        <param from="$(find-pkg-share write_letters)/parser.yaml" />
         <remap from="april_tag_coords" to="$(var remap_namespace)april_tag_coords" />
     </node>
 

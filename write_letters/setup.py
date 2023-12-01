@@ -22,10 +22,10 @@ setup(
     ],
     install_requires=["setuptools"],
     zip_safe=True,
-    maintainer="jliu",
+    maintainer="allen",
     maintainer_email="JingkunLiu2025@u.northwestern.edu",
-    description="TODO: Package description",
-    license="TODO: License declaration",
+    description="Take The coordinates and writes on the board",
+    license="MIT",
     tests_require=["pytest"],
     entry_points={
         "console_scripts": [
