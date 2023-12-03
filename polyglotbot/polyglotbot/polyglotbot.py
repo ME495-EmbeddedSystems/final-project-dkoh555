@@ -312,7 +312,7 @@ class Polyglotbot(Node):
         elif self.state == State.COMPLETE:
             # Reset the node
             self.source_string = None
-            self.target_language = None
+            self.target_language = "en" #None
             self.translated_string = None
             self.char_num = 0
             self.waypoints = []
