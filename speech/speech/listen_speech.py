@@ -2,6 +2,7 @@ import rclpy
 from rclpy.node import Node
 from enum import Enum, auto
 import speech_recognition as sr
+import sounddevice
 
 """
 Github: https://github.com/Uberi/speech_recognition/tree/master
@@ -19,12 +20,14 @@ class ListenSpeech(Node):
 
     def __init__(self):
         super().__init__("listen_speech")
-        self.state = State.WAITING
+        self.state = State.LISTENING
 
         self.timer = self.create_timer(1.0/100.0, self.timer_callback)
 
         # Create a recognizer instance...
+        self.get_logger().info("HERE1", once=True)
         self.recognizer = sr.Recognizer()
+        self.get_logger().info("HERE2", once=True)
         self.audio = None
         self.spoken_language = None
         self.text = None
@@ -32,22 +35,27 @@ class ListenSpeech(Node):
     
     def timer_callback(self):
 
+        self.get_logger().info("Running speech...", once=True)
+        # self.state = State.LISTENING
+
         if self.state == State.LISTENING:
 
+            self.get_logger().info("HERE3", once=True)
             # Currently using default microphone (from computer) as audio source
             with sr.Microphone() as source:
-                print("Say something...")
+                self.get_logger().info("Say something...", once=True)
                 # Adjust for ambient noise (if necessary)
                 self.recognizer.adjust_for_ambient_noise(source)
                 # Listen for speech (by default, it listens until it detects a pause)
                 self.audio = self.recognizer.listen(source)
 
-            self.state = State.WAITING
+            self.state = State.RECOGNIZING
 
         elif self.state == State.RECOGNIZING:
 
             # Turn the recorded language into a string
             try:
+                self.get_logger().info("Recognizing...", once=True)
                 self.spoken_language = 'en'
                 self.text = self.recognizer.recognize_google(self.audio, language=self.spoken_language)
                 print("You said:", self.text)
