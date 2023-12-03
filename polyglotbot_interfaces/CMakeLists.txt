@@ -23,6 +23,7 @@ rosidl_generate_interfaces(${PROJECT_NAME}
   "srv/StringToWaypoint.srv"
   "srv/GrabPen.srv"
   "srv/SpeakText.srv"
+  "srv/RecordingString.srv"
   "msg/CharacterPath.msg"
   "msg/AprilCoords.msg"
   DEPENDENCIES

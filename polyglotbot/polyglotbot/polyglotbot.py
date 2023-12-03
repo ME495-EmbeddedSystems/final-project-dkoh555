@@ -52,7 +52,8 @@ from polyglotbot_interfaces.srv import (
     StringToWaypoint,
     Write,
     SpeakText,
-    GrabPen
+    GrabPen,
+    RecordingString,
 )
 
 # Other libraries
@@ -109,7 +110,9 @@ class Polyglotbot(Node):
             self.get_logger().info("waiting for writer_state publisher", once=True)
 
         # Services
-        self.srv_start_translating = self.create_service(Empty, "start_translating", self.start_translating_callback, callback_group=self.cbgroup,)
+        self.srv_start_translating = self.create_service(Empty, "start_translating", self.start_translating_callback, callback_group=self.cbgroup)
+
+        self.srv_receive_recording = self.create_service(RecordingString, "receive_recording", self.receive_recording_callback, callback_group=self.cbgroup)
 
         # Clients
         self.get_characters_client = self.create_client(GetCharacters, "get_characters", callback_group=self.cbgroup)
@@ -362,6 +365,15 @@ class Polyglotbot(Node):
     def start_translating_callback(self, request, response):
         self.get_logger().info("Polyglotbot beginning translation...")
         self.state = State.SCANNING
+        return response
+    
+    def start_translating_callback(self, request, response):
+        response.output = "Polyglotbot currently not receiving inputs"
+        if self.state==State.WAITING:
+            self.target_language = request.target_language
+            self.source_string = request.input
+            response.output= "Recording target language and message received"
+            self.state = State.TRANSLATING
         return response
 
     # Future Callbacks
