@@ -112,7 +112,7 @@ class Polyglotbot(Node):
         # Services
         self.srv_start_translating = self.create_service(Empty, "start_translating", self.start_translating_callback, callback_group=self.cbgroup)
 
-        self.srv_receive_recording = self.create_service(RecordingString, "receive_recording", self.receive_recording_callback, callback_group=self.cbgroup)
+        # self.srv_receive_recording = self.create_service(RecordingString, "receive_recording", self.receive_recording_callback, callback_group=self.cbgroup)
 
         # Clients
         self.get_characters_client = self.create_client(GetCharacters, "get_characters", callback_group=self.cbgroup)

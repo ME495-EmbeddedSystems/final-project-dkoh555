@@ -34,6 +34,13 @@ class ListenSpeech(Node):
         self.audio = None
         self.spoken_language = None
         self.text = None
+        
+        self.index = 0
+        
+        for index, name in enumerate(sr.Microphone().list_microphone_names()):
+            if "USB Audio" in name:
+                self.index = index
+                self.get_logger().info(f'index: {self.index}')
 
     def record_callback(self, request, response):
         self.spoken_language = request.input
@@ -47,6 +54,7 @@ class ListenSpeech(Node):
     def timer_callback(self):
         # for index, name in enumerate(sr.Microphone().list_microphone_names()):
         #     print(f"Microphone with index {index}: {name}")
+        # self.get_logger().info(f'index: {self.index}')
 
         self.get_logger().info("Running node...", once=True)
         # self.state = State.LISTENING
@@ -58,7 +66,7 @@ class ListenSpeech(Node):
         if self.state == State.LISTENING:
             # Currently using default microphone (from computer) as audio source
             # with sr.Microphone() as source:
-            with sr.Microphone(device_index=9) as source:
+            with sr.Microphone(device_index=self.index) as source:
                 self.get_logger().info("Say something...")
                 # Adjust for ambient noise (if necessary)
                 self.recognizer.adjust_for_ambient_noise(source)
@@ -73,11 +81,11 @@ class ListenSpeech(Node):
             try:
                 self.get_logger().info("Recognizing...", once=True)
                 self.text = self.recognizer.recognize_google(self.audio, language=self.spoken_language)
-                print("You said:", self.text)
+                self.get_logger().info(f"You said: {self.text}")
             except sr.UnknownValueError:
-                print("Sorry, could not understand audio")
+                self.get_logger().error("Sorry, could not understand audio")
             except sr.RequestError as e:
-                print("Error:", str(e))
+                self.get_logger().error("Error:", str(e))
             
             self.state = State.WAITING
             self.get_logger().info("Waiting for record source language...")
