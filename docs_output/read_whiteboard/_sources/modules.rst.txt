@@ -1,0 +1,7 @@
+read_whiteboard
+===============
+
+.. toctree::
+   :maxdepth: 4
+
+   read_whiteboard

@@ -1,0 +1,18 @@
+read\_whiteboard package
+========================
+
+Submodules
+----------
+
+.. toctree::
+   :maxdepth: 4
+
+   read_whiteboard.computer_vision
+
+Module contents
+---------------
+
+.. automodule:: read_whiteboard
+   :members:
+   :undoc-members:
+   :show-inheritance:

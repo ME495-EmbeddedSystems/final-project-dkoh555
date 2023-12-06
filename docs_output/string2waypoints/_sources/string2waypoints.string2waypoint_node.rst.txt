@@ -1,0 +1,7 @@
+string2waypoints.string2waypoint\_node module
+=============================================
+
+.. automodule:: string2waypoints.string2waypoint_node
+   :members:
+   :undoc-members:
+   :show-inheritance:

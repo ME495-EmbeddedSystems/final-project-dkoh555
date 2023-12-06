@@ -1,0 +1,7 @@
+translation\_pkg.translator\_node module
+========================================
+
+.. automodule:: translation_pkg.translator_node
+   :members:
+   :undoc-members:
+   :show-inheritance:

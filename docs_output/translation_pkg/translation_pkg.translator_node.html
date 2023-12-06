@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>translation_pkg.translator_node module &mdash; translation_pkg 0.0.0 documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="translation_pkg.listener_node module" href="translation_pkg.listener_node.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            translation_pkg
+          </a>
+              <div class="version">
+                0.0
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">translation_pkg</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="translation_pkg.html">translation_pkg package</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="translation_pkg.html#submodules">Submodules</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="translation_pkg.listener_node.html">translation_pkg.listener_node module</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="translation_pkg.listener_node.html#subscribers">Subscribers</a></li>
+</ul>
+</li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">translation_pkg.translator_node module</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="#publishers">Publishers</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#services">Services</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#parameters">Parameters</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="translation_pkg.html#module-translation_pkg">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">translation_pkg</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="modules.html">translation_pkg</a></li>
+          <li class="breadcrumb-item"><a href="translation_pkg.html">translation_pkg package</a></li>
+      <li class="breadcrumb-item active">translation_pkg.translator_node module</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/translation_pkg.translator_node.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-translation_pkg.translator_node">
+<span id="translation-pkg-translator-node-module"></span><h1>translation_pkg.translator_node module<a class="headerlink" href="#module-translation_pkg.translator_node" title="Permalink to this headline"></a></h1>
+<p>Node that translates a provided input string into a given target language.</p>
+<p>Utilizes a version of the Google Translate API to detect the language of a
+given source string, receives a specified target language, and then translates that
+source string into the target language for subsequent publishing.</p>
+<section id="publishers">
+<h2>Publishers<a class="headerlink" href="#publishers" title="Permalink to this headline"></a></h2>
+<blockquote>
+<div><p>translated_msg (std_msgs/String) - Contains the translated string of the source string
+target_language (std_msgs/String) - Contains the language code of the target language</p>
+<blockquote>
+<div><p>the source string is translated into</p>
+</div></blockquote>
+</div></blockquote>
+</section>
+<section id="services">
+<h2>Services<a class="headerlink" href="#services" title="Permalink to this headline"></a></h2>
+<blockquote>
+<div><dl class="simple">
+<dt>target_language (polyglotbot_interfaces/TranslateString) - Receives the target language code</dt><dd><p>to translate a received source string into</p>
+</dd>
+<dt>input_msg (polyglotbot_interfaces/TranslateString) - Receives the source string to then</dt><dd><p>translate into a given target language</p>
+</dd>
+</dl>
+</div></blockquote>
+</section>
+<section id="parameters">
+<h2>Parameters<a class="headerlink" href="#parameters" title="Permalink to this headline"></a></h2>
+<blockquote>
+<div><p>target_language (string) - Starting target language to translate source string into</p>
+</div></blockquote>
+<dl class="py class">
+<dt class="sig sig-object py" id="translation_pkg.translator_node.Translator">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">translation_pkg.translator_node.</span></span><span class="sig-name descname"><span class="pre">Translator</span></span><a class="headerlink" href="#translation_pkg.translator_node.Translator" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">rclpy.node.Node</span></code></p>
+<p>Node for translating a provided source string.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="translation_pkg.translator_node.Translator.display_strings">
+<span class="sig-name descname"><span class="pre">display_strings</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#translation_pkg.translator_node.Translator.display_strings" title="Permalink to this definition"></a></dt>
+<dd><p>Display the configuration of the node.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="translation_pkg.translator_node.Translator.init_var">
+<span class="sig-name descname"><span class="pre">init_var</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#translation_pkg.translator_node.Translator.init_var" title="Permalink to this definition"></a></dt>
+<dd><p>Initialize all of the translator node’s variables.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="translation_pkg.translator_node.Translator.input_string_callback">
+<span class="sig-name descname"><span class="pre">input_string_callback</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">response</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#translation_pkg.translator_node.Translator.input_string_callback" title="Permalink to this definition"></a></dt>
+<dd><p>Receive the source string to be translated.</p>
+<p>When provided with a turtle_brick_interfaces/Place message,
+the arena node will switch to a GROUNDED state and update the
+brick’s position accordingly</p>
+<blockquote>
+<div><dl class="simple">
+<dt>request (Place): A message that contains the desired x, y,</dt><dd><p>and z coordinates of the brick</p>
+</dd>
+</dl>
+<p>response (Empty): The response object</p>
+</div></blockquote>
+<blockquote>
+<div><p>Empty: Contains nothing</p>
+</div></blockquote>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="translation_pkg.translator_node.Translator.target_language_callback">
+<span class="sig-name descname"><span class="pre">target_language_callback</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">response</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#translation_pkg.translator_node.Translator.target_language_callback" title="Permalink to this definition"></a></dt>
+<dd><p>Change the node’s target language.</p>
+<p>When provided with a target language code, the callback will check
+if that code is recognized by the Google Translate API.
+If it is, it will return a string informing the client node that
+the translator node has successfully switched to the target language.
+If not, then the node will inform the client that it is an invald language.</p>
+<blockquote>
+<div><p>request (String): Language code of the target language</p>
+<p>response (String): The response object</p>
+</div></blockquote>
+<blockquote>
+<div><p>String: Contains a string stating the node has successfully switched target langauge</p>
+</div></blockquote>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="translation_pkg.translator_node.Translator.timer_callback">
+<span class="sig-name descname"><span class="pre">timer_callback</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#translation_pkg.translator_node.Translator.timer_callback" title="Permalink to this definition"></a></dt>
+<dd><p>Timer callback for the translator node.</p>
+<p>In addition to returning the translated string during its service call,
+the node will constantly publish the translated string and its target language
+in case any additional nodes want to use it.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="translation_pkg.translator_node.Translator.translate_string">
+<span class="sig-name descname"><span class="pre">translate_string</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#translation_pkg.translator_node.Translator.translate_string" title="Permalink to this definition"></a></dt>
+<dd><p>Translate current source string into the target language.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="translation_pkg.translator_node.main">
+<span class="sig-prename descclassname"><span class="pre">translation_pkg.translator_node.</span></span><span class="sig-name descname"><span class="pre">main</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">args</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#translation_pkg.translator_node.main" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="translation_pkg.listener_node.html" class="btn btn-neutral float-left" title="translation_pkg.listener_node module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2021, MIT.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

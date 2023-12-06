@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>apriltags.move_robot module &mdash; apriltags 0.0.0 documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="apriltags.our_node module" href="apriltags.our_node.html" />
+    <link rel="prev" title="apriltags.get_apriltags module" href="apriltags.get_apriltags.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            apriltags
+          </a>
+              <div class="version">
+                0.0
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">apriltags</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="apriltags.html">apriltags package</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="apriltags.html#submodules">Submodules</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="apriltags.get_apriltags.html">apriltags.get_apriltags module</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">apriltags.move_robot module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="apriltags.our_node.html">apriltags.our_node module</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="apriltags.html#module-apriltags">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">apriltags</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="modules.html">apriltags</a></li>
+          <li class="breadcrumb-item"><a href="apriltags.html">apriltags package</a></li>
+      <li class="breadcrumb-item active">apriltags.move_robot module</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/apriltags.move_robot.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-apriltags.move_robot">
+<span id="apriltags-move-robot-module"></span><h1>apriltags.move_robot module<a class="headerlink" href="#module-apriltags.move_robot" title="Permalink to this headline"></a></h1>
+<dl class="py class">
+<dt class="sig sig-object py" id="apriltags.move_robot.MoveRobot">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">apriltags.move_robot.</span></span><span class="sig-name descname"><span class="pre">MoveRobot</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">rclpy.node.Node</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">move_group_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fake_mode</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ee_frame_id</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#apriltags.move_robot.MoveRobot" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>This class provides functionality for controlling a robot’s motion using ROS2 and MoveIt.</p>
+<p>It initializes various ROS2 components, handles subscriptions, and provides methods to perform
+actions like grasping, finding paths, executing paths, adding or removing objects from the
+scene,
+and more.</p>
+<blockquote>
+<div><p>node (Node): The ROS2 node used to communicate with the ROS2 ecosystem
+js_current (JointState): The current joint state of the robot
+future (Future): A future object for asynchronous operations
+param_result (ListParameters_Response): Result of parameter listing service
+tf_current (TFMessage): The current transformation (tf) of the robot
+tf_static (TFMessage): The static transformation (tf) of the robot
+cb_group (ReentrantCallbackGroup): A callbackgroup for concurrent callback functions
+frame_id (str): The frame ID for the robot’s base
+ee_frame_id(str): The frame ID for the robot’s end effector
+tolerance (float): Tolerance used in path planning
+tmr (Timer): A timer for scheduling callback functions
+tf_buffer (Buffer): A buffer for managing transformations
+tf_listener (TransformListener): A listener for transforming coordinate frames
+state (State): The current state of the robot controller
+keep_ori (bool): Whether to keep the current orientation in path planning
+plan_only(bool): Whether to plan only or plan and execute
+counter (int): A counter for internal use</p>
+</div></blockquote>
+<blockquote>
+<div><p>USER METHODS:
+grasp(): Initiates a grasping action
+find_path(point=None, quat=None): Finds a motion path given a point and a quaternion
+read_path(): Reads the planned motion path
+execute_path(path): Executes a planned motion path
+find_and_execute(point=None, quat=None): Finds and executes a motion path
+add_box(name, pose, shape): Adds a box to the robot’s planning scene
+remove_box(name): Removes a box from the robot’s planning scene
+angle_axis_to_quaternion(theta, axis): converts angle-axis rotation to a quaternion
+CLASS METHODS
+joint_states_callback(msg: JointState): Callback function for joint state updates
+transform_callback(msg: TFMessage): Callback function for transformation updates
+tf_static_callback(msg: TFMessage): Callback function for static transform updates
+future_IK_callback(future_IK): Callback function for asynchronous move planning
+future_move_callback(future_move): Callback function for asynchronous move planning
+future_b_callback(future_b): Callback function for asynchronous get result of move</p>
+<blockquote>
+<div><p>planning</p>
+</div></blockquote>
+<dl class="simple">
+<dt>future_execute_callback(future_execute): Callback function for asynchronous execution of</dt><dd><p>planned paths</p>
+</dd>
+</dl>
+<p>future_c_callback(future_c): Callback function for asynchronous get result of execution
+future_scene_callback(future_scene): Callback function for</p>
+<blockquote>
+<div><p>asynchronous planning scene updates</p>
+</div></blockquote>
+<dl class="simple">
+<dt>future_box_callback(future_box): Callback function for asynchronous box</dt><dd><p>addition/removal updates</p>
+</dd>
+</dl>
+<p>future_grasp_callback(future_grasp): Callback function for asynchronous grasping operation
+updates. future_grasp_d_callback(future_e): Callback function for asynchronous</p>
+<blockquote>
+<div><p>grasping result</p>
+</div></blockquote>
+<p>updates get_root_frame_id(): Obtains the root frame ID of the robot’s coordinate frames
+FormatPositionIKRequest(): Formats messages for compute IK requests</p>
+</div></blockquote>
+<dl class="py method">
+<dt class="sig sig-object py" id="apriltags.move_robot.MoveRobot.FormatPositionIKRequest">
+<span class="sig-name descname"><span class="pre">FormatPositionIKRequest</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#apriltags.move_robot.MoveRobot.FormatPositionIKRequest" title="Permalink to this definition"></a></dt>
+<dd><p>Format the messages that get sent to the compute IK request.</p>
+<dl class="simple">
+<dt>Requires:</dt><dd><p>string: group_name
+— from get_robot_state—
+RobotState message: moveit_msgs/RobotState: robot_state
+Constraints: constraints
+bool: is_diff
+—————————
+bool: avoid_collisions
+string: ik_link_name (OPTIONAL)
+geometry_msgs/PoseStamped: pose_stamped
+string[]: ik_link_names (OPTIONAL)
+geometry_msgs/PoseStamped[]: pose_stamped_vector (OPTIONAL)
+builtin_interfaces/Duration: timeout</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="apriltags.move_robot.MoveRobot.add_box">
+<span class="sig-name descname"><span class="pre">add_box</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pose</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">shape</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#apriltags.move_robot.MoveRobot.add_box" title="Permalink to this definition"></a></dt>
+<dd><p>Add a box to the planning scene.</p>
+<p>This method adds a box to the planning scene with the specified name, pose, and shape.
+The box is defined by its name, a geometry_msgs/Pose representing its position
+and orientation, and the shape of the box.</p>
+<blockquote>
+<div><p>name (str): The name of the box.
+pose (geometry_msgs.msg.Pose): The pose of the box in the scene.
+shape: The shape of the box.</p>
+</div></blockquote>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="apriltags.move_robot.MoveRobot.angle_axis_to_quaternion">
+<span class="sig-name descname"><span class="pre">angle_axis_to_quaternion</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">theta</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">axis</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#apriltags.move_robot.MoveRobot.angle_axis_to_quaternion" title="Permalink to this definition"></a></dt>
+<dd><p>Convert from angle-axis of rotation to a quaternion.</p>
+<p>theta:  rotation angle, in radians
+axis: the rotational axis. This will be normalized</p>
+<p>A Quaternion corresponding to the rotation</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="apriltags.move_robot.MoveRobot.execute_path">
+<span class="sig-name descname"><span class="pre">execute_path</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#apriltags.move_robot.MoveRobot.execute_path" title="Permalink to this definition"></a></dt>
+<dd><p>Execute the planned path obtained from the <cite>find_path</cite> method.</p>
+<p>This method is used to execute a previously planned path. It sets the
+execution state and starts the execution of the specified trajectory.</p>
+<blockquote>
+<div><p>path (trajectory_msgs.msg.JointTrajectory): The planned path to be executed.</p>
+</div></blockquote>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="apriltags.move_robot.MoveRobot.find_and_execute">
+<span class="sig-name descname"><span class="pre">find_and_execute</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">point</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">quat</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#apriltags.move_robot.MoveRobot.find_and_execute" title="Permalink to this definition"></a></dt>
+<dd><p>Find and executes a path to a specified end-effector pose.</p>
+<p>If provided, the position and orientation are used to plan a path to the desired pose.
+The path is both planned and executed. If no position and orientation are provided,
+the method will use the current position and orientation.</p>
+<blockquote>
+<div><p>point (geometry_msgs.msg.Point, optional): The desired position (x, y, z).
+quat (geometry_msgs.msg.Quaternion, optional): The desired orientation (x, y, z, w).</p>
+</div></blockquote>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="apriltags.move_robot.MoveRobot.find_path">
+<span class="sig-name descname"><span class="pre">find_path</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">point</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">quat</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#apriltags.move_robot.MoveRobot.find_path" title="Permalink to this definition"></a></dt>
+<dd><p>Initiate a path planning operation to reach a desired end-effector pose.</p>
+<p>This method takes in a position and an orientation (as a quaternion) and plans a path
+to reach the specified end-effector pose. If the position or orientation is not provided,
+it will use the current robot’s state. The path planning operation is then triggered,
+and the state transitions to IK (Inverse Kinematics).</p>
+<dl class="simple">
+<dt>Args:</dt><dd><p>point (Optional[geometry_msgs.msg.Point]): The desired 3D position
+(x, y, z) of the end-effector.
+quat (Optional[geometry_msgs.msg.Quaternion]): The desired orientation as a
+quaternion (x, y, z, w).</p>
+</dd>
+</dl>
+<blockquote>
+<div><p>None</p>
+</div></blockquote>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="apriltags.move_robot.MoveRobot.future_IK_callback">
+<span class="sig-name descname"><span class="pre">future_IK_callback</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">future_IK</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#apriltags.move_robot.MoveRobot.future_IK_callback" title="Permalink to this definition"></a></dt>
+<dd><p>Call back for when the compute IK future is done.</p>
+<p>Processes the IK result and initiates motion planning.</p>
+<blockquote>
+<div><p>future_IK (rclpy.client.Future): The future representing
+the result of the compute IK request.</p>
+</div></blockquote>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="apriltags.move_robot.MoveRobot.future_b_callback">
+<span class="sig-name descname"><span class="pre">future_b_callback</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">future_b</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#apriltags.move_robot.MoveRobot.future_b_callback" title="Permalink to this definition"></a></dt>
+<dd><p>Call back when get result future of motion planning is done.</p>
+<p>Retrieves the planned trajectory.</p>
+<blockquote>
+<div><p>future_b (rclpy.action.ClientGoalHandle): The future representing
+the result of motion planning.</p>
+</div></blockquote>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="apriltags.move_robot.MoveRobot.future_box_callback">
+<span class="sig-name descname"><span class="pre">future_box_callback</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">future_box</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#apriltags.move_robot.MoveRobot.future_box_callback" title="Permalink to this definition"></a></dt>
+<dd><p>Call back for when the apply planning scene future is done.</p>
+<p>Completes the process of adding collision objects to the planning scene.</p>
+<blockquote>
+<div><p>future_box (rclpy.client.Future): Future representing result of
+applying planning scene.</p>
+</div></blockquote>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="apriltags.move_robot.MoveRobot.future_c_callback">
+<span class="sig-name descname"><span class="pre">future_c_callback</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">future_c</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#apriltags.move_robot.MoveRobot.future_c_callback" title="Permalink to this definition"></a></dt>
+<dd><p>Call back for when get result future of execution is done. Completes execution process.</p>
+<blockquote>
+<div><p>future_c (rclpy.action.ClientGoalHandle): The future representing the
+result of execution.</p>
+</div></blockquote>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="apriltags.move_robot.MoveRobot.future_execute_callback">
+<span class="sig-name descname"><span class="pre">future_execute_callback</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">future_execute</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#apriltags.move_robot.MoveRobot.future_execute_callback" title="Permalink to this definition"></a></dt>
+<dd><p>Call back when execute action future is done. Initiate process of getting execution result.</p>
+<blockquote>
+<div><p>future_execute (rclpy.action.ClientGoalHandle): The future representing
+the execute action request.</p>
+</div></blockquote>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="apriltags.move_robot.MoveRobot.future_grasp_callback">
+<span class="sig-name descname"><span class="pre">future_grasp_callback</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">future_grasp</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#apriltags.move_robot.MoveRobot.future_grasp_callback" title="Permalink to this definition"></a></dt>
+<dd><p>Call back when grasp action future is done, initiates process of getting grasping result.</p>
+<blockquote>
+<div><p>future_grasp (rclpy.action.ClientGoalHandle): Future representing grasp action request.</p>
+</div></blockquote>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="apriltags.move_robot.MoveRobot.future_grasp_d_callback">
+<span class="sig-name descname"><span class="pre">future_grasp_d_callback</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">future_e</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#apriltags.move_robot.MoveRobot.future_grasp_d_callback" title="Permalink to this definition"></a></dt>
+<dd><p>Call back for when the get result future of grasping is done. Complete grasp process.</p>
+<blockquote>
+<div><p>future_e (rclpy.action.ClientGoalHandle): The future representing
+the result of grasping.</p>
+</div></blockquote>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="apriltags.move_robot.MoveRobot.future_move_callback">
+<span class="sig-name descname"><span class="pre">future_move_callback</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">future_move</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#apriltags.move_robot.MoveRobot.future_move_callback" title="Permalink to this definition"></a></dt>
+<dd><p>Call back for when the move action future is done.</p>
+<p>Initiates the process of getting the result of motion planning.</p>
+<blockquote>
+<div><p>future_move (rclpy.action.ClientGoalHandle): The future
+representing the move action request.</p>
+</div></blockquote>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="apriltags.move_robot.MoveRobot.future_scene_callback">
+<span class="sig-name descname"><span class="pre">future_scene_callback</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">future_scene</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#apriltags.move_robot.MoveRobot.future_scene_callback" title="Permalink to this definition"></a></dt>
+<dd><p>Call back for when the get planning scene future is done.</p>
+<p>Processes the planning scene information and adds collision objects.</p>
+<blockquote>
+<div><p>future_scene (rclpy.client.Future): Future representing result of
+get planning scene request.</p>
+</div></blockquote>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="apriltags.move_robot.MoveRobot.get_root_frame_id">
+<span class="sig-name descname"><span class="pre">get_root_frame_id</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#apriltags.move_robot.MoveRobot.get_root_frame_id" title="Permalink to this definition"></a></dt>
+<dd><p>Retrieve the root frame ID of the robot based on the TF tree.</p>
+<blockquote>
+<div><p>RuntimeError: If the TF tree is not valid.</p>
+</div></blockquote>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="apriltags.move_robot.MoveRobot.grasp">
+<span class="sig-name descname"><span class="pre">grasp</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#apriltags.move_robot.MoveRobot.grasp" title="Permalink to this definition"></a></dt>
+<dd><p>Initiate a grasping operation with the specified parameters.</p>
+<p>This method sets up a grasping goal and transitions the robot’s state to GRASP.
+The parameters for the grasp operation, such as width, speed, and force, are pre-defined.</p>
+<blockquote>
+<div><p>None</p>
+</div></blockquote>
+<blockquote>
+<div><p>None</p>
+</div></blockquote>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="apriltags.move_robot.MoveRobot.joint_states_callback">
+<span class="sig-name descname"><span class="pre">joint_states_callback</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">msg</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">sensor_msgs.msg._joint_state.JointState</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#apriltags.move_robot.MoveRobot.joint_states_callback" title="Permalink to this definition"></a></dt>
+<dd><p>Call back function to receive and process joint states of the robot.</p>
+<blockquote>
+<div><p>msg (sensor_msgs.msg.JointState): The JointState
+message containing joint state information.</p>
+</div></blockquote>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="apriltags.move_robot.MoveRobot.read_path">
+<span class="sig-name descname"><span class="pre">read_path</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#apriltags.move_robot.MoveRobot.read_path" title="Permalink to this definition"></a></dt>
+<dd><p>Read and retrieves the planned path.</p>
+<p>This method is used to retrieve the planned path generated by a previous
+path planning operation. After calling this method, the state transitions back to WAITING.</p>
+<blockquote>
+<div><p>trajectory_msgs.msg.JointTrajectory: The planned path to the desired end-effector pose.</p>
+</div></blockquote>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="apriltags.move_robot.MoveRobot.remove_box">
+<span class="sig-name descname"><span class="pre">remove_box</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#apriltags.move_robot.MoveRobot.remove_box" title="Permalink to this definition"></a></dt>
+<dd><p>Remove a box from the planning scene.</p>
+<p>This method removes a previously added box from the planning scene
+by setting the operation of the collision object to REMOVE.</p>
+<blockquote>
+<div><p>name (str): The name of the box to be removed.</p>
+</div></blockquote>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="apriltags.move_robot.MoveRobot.tf_static_callback">
+<span class="sig-name descname"><span class="pre">tf_static_callback</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">msg</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">tf2_msgs.msg._tf_message.TFMessage</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#apriltags.move_robot.MoveRobot.tf_static_callback" title="Permalink to this definition"></a></dt>
+<dd><p>Call back function to receive and process static transformations (TF) of the robot (base).</p>
+<blockquote>
+<div><p>msg (geometry_msgs.msg.TFMessage): The TFMessage
+containing static transformation information.</p>
+</div></blockquote>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="apriltags.move_robot.MoveRobot.timer_callback">
+<span class="sig-name descname"><span class="pre">timer_callback</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#apriltags.move_robot.MoveRobot.timer_callback" title="Permalink to this definition"></a></dt>
+<dd><p>Start timer callback for controlling robot actions and state transitions.</p>
+<p>This callback function is executed periodically by a timer and controls
+the state of the robot. The possible states include STARTUP,
+IK(inverse kinematics computation), FINDPATH (motion planning),
+EXECUTE (trajectory execution), DOTHING(idle), GETPLANNING (planning scene retrieval),
+BOX (scene object addition/removal), and GRASP (grasping operation).</p>
+<p>The behavior of the robot is determined by the current state, and the
+corresponding actions are initiated asynchronously. Transition between states is
+based on the completion of these actions.</p>
+<p>The function logs relevant information for debugging and state tracking.</p>
+<blockquote>
+<div><p>None</p>
+</div></blockquote>
+<blockquote>
+<div><p>None</p>
+</div></blockquote>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="apriltags.move_robot.MoveRobot.transform_callback">
+<span class="sig-name descname"><span class="pre">transform_callback</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">msg</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">tf2_msgs.msg._tf_message.TFMessage</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#apriltags.move_robot.MoveRobot.transform_callback" title="Permalink to this definition"></a></dt>
+<dd><p>Call back function to receive and process transformations (TF) of the robot.</p>
+<blockquote>
+<div><p>msg (geometry_msgs.msg.TFMessage): The TFMessage containing transformation information.</p>
+</div></blockquote>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="apriltags.move_robot.State">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">apriltags.move_robot.</span></span><span class="sig-name descname"><span class="pre">State</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#apriltags.move_robot.State" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">enum.Enum</span></code></p>
+<p>Enum representing the current state of the system.</p>
+<p>This enum is used to determine the main timer function’s behavior on each iteration.</p>
+<blockquote>
+<div><p>STARTUP: Startup state
+WAITING: Waiting for user input
+IK: Computing Inverse Kinematics
+FINDPATH: Finding a path
+EXECUTEPATH: Executing a path
+BOX: Adding or removing a box from the environment
+GETPLANNING: Getting the planning scene
+DONOTHING: Performing various tasks
+GRASP: Performing a grasping operation
+HOMING
+DONE: Task is complete</p>
+</div></blockquote>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="apriltags.move_robot.State.BOX">
+<span class="sig-name descname"><span class="pre">BOX</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">(&lt;enum.auto</span> <span class="pre">object&gt;,)</span></em><a class="headerlink" href="#apriltags.move_robot.State.BOX" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="apriltags.move_robot.State.DONE">
+<span class="sig-name descname"><span class="pre">DONE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">(&lt;enum.auto</span> <span class="pre">object&gt;,)</span></em><a class="headerlink" href="#apriltags.move_robot.State.DONE" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="apriltags.move_robot.State.DOTHING">
+<span class="sig-name descname"><span class="pre">DOTHING</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">(&lt;enum.auto</span> <span class="pre">object&gt;,)</span></em><a class="headerlink" href="#apriltags.move_robot.State.DOTHING" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="apriltags.move_robot.State.EXECUTE">
+<span class="sig-name descname"><span class="pre">EXECUTE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">(&lt;enum.auto</span> <span class="pre">object&gt;,)</span></em><a class="headerlink" href="#apriltags.move_robot.State.EXECUTE" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="apriltags.move_robot.State.FINDPATH">
+<span class="sig-name descname"><span class="pre">FINDPATH</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">(&lt;enum.auto</span> <span class="pre">object&gt;,)</span></em><a class="headerlink" href="#apriltags.move_robot.State.FINDPATH" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="apriltags.move_robot.State.GETPLANNING">
+<span class="sig-name descname"><span class="pre">GETPLANNING</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">(&lt;enum.auto</span> <span class="pre">object&gt;,)</span></em><a class="headerlink" href="#apriltags.move_robot.State.GETPLANNING" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="apriltags.move_robot.State.GRASP">
+<span class="sig-name descname"><span class="pre">GRASP</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">(&lt;enum.auto</span> <span class="pre">object&gt;,)</span></em><a class="headerlink" href="#apriltags.move_robot.State.GRASP" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="apriltags.move_robot.State.HOMING">
+<span class="sig-name descname"><span class="pre">HOMING</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">(&lt;enum.auto</span> <span class="pre">object&gt;,)</span></em><a class="headerlink" href="#apriltags.move_robot.State.HOMING" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="apriltags.move_robot.State.IK">
+<span class="sig-name descname"><span class="pre">IK</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">(&lt;enum.auto</span> <span class="pre">object&gt;,)</span></em><a class="headerlink" href="#apriltags.move_robot.State.IK" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="apriltags.move_robot.State.STARTUP">
+<span class="sig-name descname"><span class="pre">STARTUP</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">(&lt;enum.auto</span> <span class="pre">object&gt;,)</span></em><a class="headerlink" href="#apriltags.move_robot.State.STARTUP" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="apriltags.move_robot.State.WAITING">
+<span class="sig-name descname"><span class="pre">WAITING</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">(&lt;enum.auto</span> <span class="pre">object&gt;,)</span></em><a class="headerlink" href="#apriltags.move_robot.State.WAITING" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="apriltags.get_apriltags.html" class="btn btn-neutral float-left" title="apriltags.get_apriltags module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="apriltags.our_node.html" class="btn btn-neutral float-right" title="apriltags.our_node module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2021, MIT.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

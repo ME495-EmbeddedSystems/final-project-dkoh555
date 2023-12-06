@@ -1,0 +1,7 @@
+speak\_out.speak module
+=======================
+
+.. automodule:: speak_out.speak
+   :members:
+   :undoc-members:
+   :show-inheritance:

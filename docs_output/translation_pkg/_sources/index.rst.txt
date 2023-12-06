@@ -1,0 +1,15 @@
+Welcome to the documentation for translation_pkg
+================================================
+
+.. toctree::
+   :maxdepth: 2
+
+   translation_pkg <modules>
+
+
+Indices and Search
+==================
+
+* :ref:`genindex`
+* :ref:`search`
+

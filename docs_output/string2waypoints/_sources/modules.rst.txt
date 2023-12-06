@@ -1,0 +1,7 @@
+string2waypoints
+================
+
+.. toctree::
+   :maxdepth: 4
+
+   string2waypoints

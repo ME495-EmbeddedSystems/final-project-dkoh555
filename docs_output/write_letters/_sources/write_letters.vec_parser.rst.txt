@@ -1,0 +1,7 @@
+write\_letters.vec\_parser module
+=================================
+
+.. automodule:: write_letters.vec_parser
+   :members:
+   :undoc-members:
+   :show-inheritance:

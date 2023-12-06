@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>apriltags.our_node module &mdash; apriltags 0.0.0 documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="apriltags.move_robot module" href="apriltags.move_robot.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            apriltags
+          </a>
+              <div class="version">
+                0.0
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">apriltags</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="apriltags.html">apriltags package</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="apriltags.html#submodules">Submodules</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="apriltags.get_apriltags.html">apriltags.get_apriltags module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="apriltags.move_robot.html">apriltags.move_robot module</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">apriltags.our_node module</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="apriltags.html#module-apriltags">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">apriltags</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="modules.html">apriltags</a></li>
+          <li class="breadcrumb-item"><a href="apriltags.html">apriltags package</a></li>
+      <li class="breadcrumb-item active">apriltags.our_node module</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/apriltags.our_node.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-apriltags.our_node">
+<span id="apriltags-our-node-module"></span><h1>apriltags.our_node module<a class="headerlink" href="#module-apriltags.our_node" title="Permalink to this headline"></a></h1>
+<dl class="py class">
+<dt class="sig sig-object py" id="apriltags.our_node.OurNode">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">apriltags.our_node.</span></span><span class="sig-name descname"><span class="pre">OurNode</span></span><a class="headerlink" href="#apriltags.our_node.OurNode" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">rclpy.node.Node</span></code></p>
+<p>Custom ROS2 Node for controlling a robotic arm and performing various tasks.</p>
+<p>This node initializes parameters and controls the robotic arm’s movements,
+gripper actions, and the addition/removal of collision objects.</p>
+<blockquote>
+<div><p>move_group_name (str): Name of the move group for the robot arm.
+ee_frame_id (str): Name of the end-effector frame.
+fake_mode (bool): Flag to enable or disable fake mode for testing.
+goal_x (float): X coordinate goal for arm movement.
+goal_y (float): Y coordinate goal for arm movement.
+goal_z (float): Z coordinate goal for arm movement.
+theta (float): Angle of rotation for the end-effector.
+rotation_axis (list of float): Axis around which the end-effector rotates.
+keep_pos (bool): Flag to keep the current position.
+keep_ori (bool): Flag to keep the current orientation.</p>
+</div></blockquote>
+<blockquote>
+<div><p>move_group_name (str): Name of the move group.
+ee_frame_id (str): End-effector frame ID.
+fake_mode (bool): Flag indicating fake mode.
+goal_x (float): X coordinate for arm goal.
+goal_y (float): Y coordinate for arm goal.
+goal_z (float): Z coordinate for arm goal.
+theta (float): Angle of rotation for the end-effector.
+rotation_axis (list of float): Axis of rotation for the end-effector.
+robot (MoveRobot): Object for controlling the robot’s movements and actions.
+position (Point): Current position.
+orientation (Quaternion): Current orientation.
+cb_group (ReentrantCallbackGroup): Callback group for timer.
+timer (Timer): Timer for the main control loop.
+comm_count (int): Counter for sequential position commands.
+pos_list (list of Point): List of goal positions for arm movement.
+ori_list (list of Quaternion): List of goal orientations for arm movement.
+state (State): Current state of the robot control.
+grasp_called (bool): Flag to track if the grasp action has been called.</p>
+</div></blockquote>
+<blockquote>
+<div><p>timer_callback(): Callback function for the timer to control robot actions.</p>
+</div></blockquote>
+<dl class="py method">
+<dt class="sig sig-object py" id="apriltags.our_node.OurNode.timer_callback">
+<span class="sig-name descname"><span class="pre">timer_callback</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#apriltags.our_node.OurNode.timer_callback" title="Permalink to this definition"></a></dt>
+<dd><p>Give a function (callback) for the timer to control robot actions.</p>
+<p>This method handles different states and actions of the robot, including arm movements,
+gripper control, and collision object management.</p>
+<p>If the state is <cite>MOVEARM</cite>, it executes sequential arm movements specified by <cite>pos_list</cite>
+and <cite>ori_list</cite>. After each movement, it checks if the robot is in a fake mode and, if not,
+it triggers the gripper action by changing the state to <cite>GRIPPER</cite>.</p>
+<p>If the state is <cite>GRIPPER</cite>, it handles gripper actions. When the gripper action is complete,
+it changes the state back to <cite>MOVEARM</cite> to execute the next command.</p>
+<p>If the state is <cite>ADDBOX</cite>, it adds a box to the environment. Once the addition is complete,
+it changes the state to <cite>MOVEARM</cite>.</p>
+<p>If the state is <cite>REMOVEBOX</cite>, it removes a box from the environment. Once the removal is
+complete,it changes the state to <cite>DONE</cite>.</p>
+<p>If the state is <cite>GRASP</cite>, it executes the grasp action. Once the grasp action is complete,
+it changes the state to <cite>DONE</cite>.</p>
+<p>The <cite>comm_count</cite> variable keeps track of the sequential commands, and the <cite>grasp_called</cite>
+flag is used to track if the grasp action has been called.</p>
+<blockquote>
+<div><p>None</p>
+</div></blockquote>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="apriltags.our_node.State">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">apriltags.our_node.</span></span><span class="sig-name descname"><span class="pre">State</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#apriltags.our_node.State" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">enum.Enum</span></code></p>
+<p>Enum representing the current state of the system.</p>
+<p>This enum is used to determine the main timer function’s behavior on each iteration.</p>
+<blockquote>
+<div><p>ADDBOX: Add a box to the environment
+REMOVEBOX: Remove a box from the environment
+MOVEARM: Move the arm to a new position
+GRIPPER: Move the gripper to a new configuration
+DONE: Do nothing</p>
+</div></blockquote>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="apriltags.our_node.State.ADDBOX">
+<span class="sig-name descname"><span class="pre">ADDBOX</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">(&lt;enum.auto</span> <span class="pre">object&gt;,)</span></em><a class="headerlink" href="#apriltags.our_node.State.ADDBOX" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="apriltags.our_node.State.DONE">
+<span class="sig-name descname"><span class="pre">DONE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">(&lt;enum.auto</span> <span class="pre">object&gt;,)</span></em><a class="headerlink" href="#apriltags.our_node.State.DONE" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="apriltags.our_node.State.GRIPPER">
+<span class="sig-name descname"><span class="pre">GRIPPER</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">(&lt;enum.auto</span> <span class="pre">object&gt;,)</span></em><a class="headerlink" href="#apriltags.our_node.State.GRIPPER" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="apriltags.our_node.State.MOVEARM">
+<span class="sig-name descname"><span class="pre">MOVEARM</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">(&lt;enum.auto</span> <span class="pre">object&gt;,)</span></em><a class="headerlink" href="#apriltags.our_node.State.MOVEARM" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="apriltags.our_node.State.REMOVEBOX">
+<span class="sig-name descname"><span class="pre">REMOVEBOX</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">(&lt;enum.auto</span> <span class="pre">object&gt;,)</span></em><a class="headerlink" href="#apriltags.our_node.State.REMOVEBOX" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="apriltags.our_node.entry_point">
+<span class="sig-prename descclassname"><span class="pre">apriltags.our_node.</span></span><span class="sig-name descname"><span class="pre">entry_point</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">args</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#apriltags.our_node.entry_point" title="Permalink to this definition"></a></dt>
+<dd><p>Entry point for the ‘our_node’ ROS2 node.</p>
+<p>Initializes ROS2, creates the ‘our_node’ node, enters the ROS2 spin loop,
+and shuts down ROS2 when the node execution is complete.</p>
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="apriltags.move_robot.html" class="btn btn-neutral float-left" title="apriltags.move_robot module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2021, MIT.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

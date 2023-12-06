@@ -1,0 +1,7 @@
+apriltags.move\_robot module
+============================
+
+.. automodule:: apriltags.move_robot
+   :members:
+   :undoc-members:
+   :show-inheritance:

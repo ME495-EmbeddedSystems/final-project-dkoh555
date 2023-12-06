@@ -1,0 +1,7 @@
+write\_letters.send\_letter module
+==================================
+
+.. automodule:: write_letters.send_letter
+   :members:
+   :undoc-members:
+   :show-inheritance:

@@ -1,0 +1,7 @@
+speech.listen\_speech module
+============================
+
+.. automodule:: speech.listen_speech
+   :members:
+   :undoc-members:
+   :show-inheritance:

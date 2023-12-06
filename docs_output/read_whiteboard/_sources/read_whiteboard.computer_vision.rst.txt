@@ -1,0 +1,7 @@
+read\_whiteboard.computer\_vision module
+========================================
+
+.. automodule:: read_whiteboard.computer_vision
+   :members:
+   :undoc-members:
+   :show-inheritance:

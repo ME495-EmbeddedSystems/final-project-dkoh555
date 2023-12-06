@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>write_letters.vec_parser module &mdash; write_letters 0.0.0 documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="write_letters.write module" href="write_letters.write.html" />
+    <link rel="prev" title="write_letters.send_letter module" href="write_letters.send_letter.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            write_letters
+          </a>
+              <div class="version">
+                0.0
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">write_letters</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="write_letters.html">write_letters package</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="write_letters.html#submodules">Submodules</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="write_letters.send_letter.html">write_letters.send_letter module</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="write_letters.send_letter.html#raises">Raises</a></li>
+<li class="toctree-l5"><a class="reference internal" href="write_letters.send_letter.html#parameters">Parameters</a></li>
+<li class="toctree-l5"><a class="reference internal" href="write_letters.send_letter.html#clients">Clients</a></li>
+<li class="toctree-l5"><a class="reference internal" href="write_letters.send_letter.html#returns">Returns</a></li>
+</ul>
+</li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">write_letters.vec_parser module</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="#parameters">Parameters</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#services">Services</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#clients">Clients</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#subscriptions">Subscriptions</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#returns">Returns</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="write_letters.write.html">write_letters.write module</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="write_letters.write.html#parameters">Parameters</a></li>
+<li class="toctree-l5"><a class="reference internal" href="write_letters.write.html#services">Services</a></li>
+<li class="toctree-l5"><a class="reference internal" href="write_letters.write.html#publishers">Publishers</a></li>
+<li class="toctree-l5"><a class="reference internal" href="write_letters.write.html#returns">Returns</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="write_letters.html#module-write_letters">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">write_letters</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="modules.html">write_letters</a></li>
+          <li class="breadcrumb-item"><a href="write_letters.html">write_letters package</a></li>
+      <li class="breadcrumb-item active">write_letters.vec_parser module</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/write_letters.vec_parser.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-write_letters.vec_parser">
+<span id="write-letters-vec-parser-module"></span><h1>write_letters.vec_parser module<a class="headerlink" href="#module-write_letters.vec_parser" title="Permalink to this headline"></a></h1>
+<p>Parser node that parses the all waypoints of a set of letters to a path.</p>
+<section id="parameters">
+<h2>Parameters<a class="headerlink" href="#parameters" title="Permalink to this headline"></a></h2>
+<blockquote>
+<div><p>offset_letter: The gap between the letters
+offset_standoff: The offset between pen and board when standing off
+offset_penup: The offset for pen lifting up
+scaling: The scaling factor for how big each character is
+x_start: The start X coordinate
+z_start: The start Z coordinate</p>
+</div></blockquote>
+</section>
+<section id="services">
+<h2>Services<a class="headerlink" href="#services" title="Permalink to this headline"></a></h2>
+<blockquote>
+<div><p>write [Write]: Write the characters on the board.</p>
+</div></blockquote>
+</section>
+<section id="clients">
+<h2>Clients<a class="headerlink" href="#clients" title="Permalink to this headline"></a></h2>
+<blockquote>
+<div><p>load_path [Path]: Load the path on robot.</p>
+</div></blockquote>
+</section>
+<section id="subscriptions">
+<h2>Subscriptions<a class="headerlink" href="#subscriptions" title="Permalink to this headline"></a></h2>
+<blockquote>
+<div><p>april_tag_coords [AprilCoords]: The coordinate of all april tags.
+writer_state [String]: The state of the writer node</p>
+</div></blockquote>
+</section>
+<section id="returns">
+<h2>Returns<a class="headerlink" href="#returns" title="Permalink to this headline"></a></h2>
+<blockquote>
+<div><p>None</p>
+</div></blockquote>
+<dl class="py class">
+<dt class="sig sig-object py" id="write_letters.vec_parser.VecParser">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">write_letters.vec_parser.</span></span><span class="sig-name descname"><span class="pre">VecParser</span></span><a class="headerlink" href="#write_letters.vec_parser.VecParser" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">rclpy.node.Node</span></code></p>
+<p>Parse to coordinates of the letter to the waypoints in robot frame.</p>
+<blockquote>
+<div><p>Node (rclpy.node.Node): Node super class.</p>
+</div></blockquote>
+<dl class="py method">
+<dt class="sig sig-object py" id="write_letters.vec_parser.VecParser.path_future_callback">
+<span class="sig-name descname"><span class="pre">path_future_callback</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">future_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">rclpy.task.Future</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#write_letters.vec_parser.VecParser.path_future_callback" title="Permalink to this definition"></a></dt>
+<dd><p>Show result when path service is done.</p>
+<blockquote>
+<div><p>future_path (Future): Future object of the path service call.</p>
+</div></blockquote>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="write_letters.vec_parser.VecParser.srv_write_callback">
+<span class="sig-name descname"><span class="pre">srv_write_callback</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">response</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#write_letters.vec_parser.VecParser.srv_write_callback" title="Permalink to this definition"></a></dt>
+<dd><p>Writer the letters on the white board.</p>
+<blockquote>
+<div><p>request (Write_Request): The request object of the write service
+response (Write_Response): The response object of the write service</p>
+</div></blockquote>
+<blockquote>
+<div><p>Write_Response: response for write service.</p>
+</div></blockquote>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="write_letters.vec_parser.VecParser.sub_april_coords_callback">
+<span class="sig-name descname"><span class="pre">sub_april_coords_callback</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">msg</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">polyglotbot_interfaces.msg._april_coords.AprilCoords</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#write_letters.vec_parser.VecParser.sub_april_coords_callback" title="Permalink to this definition"></a></dt>
+<dd><p>Get and store the three apriltags’ coordinates.</p>
+<blockquote>
+<div><p>msg (AprilCoords): Message from april_coords topic.</p>
+</div></blockquote>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="write_letters.vec_parser.VecParser.sub_writer_state_callback">
+<span class="sig-name descname"><span class="pre">sub_writer_state_callback</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">msg</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">std_msgs.msg._string.String</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#write_letters.vec_parser.VecParser.sub_writer_state_callback" title="Permalink to this definition"></a></dt>
+<dd><p>Get and store the writer state.</p>
+<blockquote>
+<div><p>msg (String): Message from writer_state topic.</p>
+</div></blockquote>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="write_letters.vec_parser.get_plane_eqn">
+<span class="sig-prename descclassname"><span class="pre">write_letters.vec_parser.</span></span><span class="sig-name descname"><span class="pre">get_plane_eqn</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">p1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">p2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">p3</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#write_letters.vec_parser.get_plane_eqn" title="Permalink to this definition"></a></dt>
+<dd><p>Get plane equation in form ax + by + cz = d.</p>
+<blockquote>
+<div><p>p1 (<a class="reference external" href="mailto:_ArrayType&#37;&#52;&#48;array">_ArrayType<span>&#64;</span>array</a>): first point
+p2 (<a class="reference external" href="mailto:_ArrayType&#37;&#52;&#48;array">_ArrayType<span>&#64;</span>array</a>): second point
+p3 (<a class="reference external" href="mailto:_ArrayType&#37;&#52;&#48;array">_ArrayType<span>&#64;</span>array</a>): third point</p>
+</div></blockquote>
+<blockquote>
+<div><p>tuple[float, float, float, float]: a, b, c, d representing ax + by + cz = d</p>
+</div></blockquote>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="write_letters.vec_parser.main">
+<span class="sig-prename descclassname"><span class="pre">write_letters.vec_parser.</span></span><span class="sig-name descname"><span class="pre">main</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">args</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#write_letters.vec_parser.main" title="Permalink to this definition"></a></dt>
+<dd><p>Start the parser node.</p>
+<blockquote>
+<div><p>args (list[str], optional): The arguments passed to the ros. Defaults to None.</p>
+</div></blockquote>
+</dd></dl>
+
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="write_letters.send_letter.html" class="btn btn-neutral float-left" title="write_letters.send_letter module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="write_letters.write.html" class="btn btn-neutral float-right" title="write_letters.write module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2021, MIT.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

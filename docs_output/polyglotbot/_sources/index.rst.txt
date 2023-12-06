@@ -1,0 +1,15 @@
+Welcome to the documentation for polyglotbot
+============================================
+
+.. toctree::
+   :maxdepth: 2
+
+   polyglotbot <modules>
+
+
+Indices and Search
+==================
+
+* :ref:`genindex`
+* :ref:`search`
+

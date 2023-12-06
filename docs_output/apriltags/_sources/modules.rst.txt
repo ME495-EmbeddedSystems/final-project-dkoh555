@@ -1,0 +1,7 @@
+apriltags
+=========
+
+.. toctree::
+   :maxdepth: 4
+
+   apriltags

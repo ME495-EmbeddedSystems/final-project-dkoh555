@@ -1,0 +1,15 @@
+Welcome to the documentation for apriltags
+==========================================
+
+.. toctree::
+   :maxdepth: 2
+
+   apriltags <modules>
+
+
+Indices and Search
+==================
+
+* :ref:`genindex`
+* :ref:`search`
+

@@ -1,0 +1,7 @@
+polyglotbot.polyglotbot module
+==============================
+
+.. automodule:: polyglotbot.polyglotbot
+   :members:
+   :undoc-members:
+   :show-inheritance:

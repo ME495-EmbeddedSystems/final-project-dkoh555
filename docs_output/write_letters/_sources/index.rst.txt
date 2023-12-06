@@ -1,0 +1,15 @@
+Welcome to the documentation for write_letters
+==============================================
+
+.. toctree::
+   :maxdepth: 2
+
+   write_letters <modules>
+
+
+Indices and Search
+==================
+
+* :ref:`genindex`
+* :ref:`search`
+

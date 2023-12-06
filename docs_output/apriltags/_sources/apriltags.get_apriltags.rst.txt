@@ -1,0 +1,7 @@
+apriltags.get\_apriltags module
+===============================
+
+.. automodule:: apriltags.get_apriltags
+   :members:
+   :undoc-members:
+   :show-inheritance:

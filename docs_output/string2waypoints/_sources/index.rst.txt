@@ -1,0 +1,15 @@
+Welcome to the documentation for string2waypoints
+=================================================
+
+.. toctree::
+   :maxdepth: 2
+
+   string2waypoints <modules>
+
+
+Indices and Search
+==================
+
+* :ref:`genindex`
+* :ref:`search`
+

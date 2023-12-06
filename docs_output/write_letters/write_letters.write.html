@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>write_letters.write module &mdash; write_letters 0.0.0 documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="write_letters.vec_parser module" href="write_letters.vec_parser.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            write_letters
+          </a>
+              <div class="version">
+                0.0
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">write_letters</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="write_letters.html">write_letters package</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="write_letters.html#submodules">Submodules</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="write_letters.send_letter.html">write_letters.send_letter module</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="write_letters.send_letter.html#raises">Raises</a></li>
+<li class="toctree-l5"><a class="reference internal" href="write_letters.send_letter.html#parameters">Parameters</a></li>
+<li class="toctree-l5"><a class="reference internal" href="write_letters.send_letter.html#clients">Clients</a></li>
+<li class="toctree-l5"><a class="reference internal" href="write_letters.send_letter.html#returns">Returns</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="write_letters.vec_parser.html">write_letters.vec_parser module</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="write_letters.vec_parser.html#parameters">Parameters</a></li>
+<li class="toctree-l5"><a class="reference internal" href="write_letters.vec_parser.html#services">Services</a></li>
+<li class="toctree-l5"><a class="reference internal" href="write_letters.vec_parser.html#clients">Clients</a></li>
+<li class="toctree-l5"><a class="reference internal" href="write_letters.vec_parser.html#subscriptions">Subscriptions</a></li>
+<li class="toctree-l5"><a class="reference internal" href="write_letters.vec_parser.html#returns">Returns</a></li>
+</ul>
+</li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">write_letters.write module</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="#parameters">Parameters</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#services">Services</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#publishers">Publishers</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#returns">Returns</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="write_letters.html#module-write_letters">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">write_letters</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="modules.html">write_letters</a></li>
+          <li class="breadcrumb-item"><a href="write_letters.html">write_letters package</a></li>
+      <li class="breadcrumb-item active">write_letters.write module</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/write_letters.write.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-write_letters.write">
+<span id="write-letters-write-module"></span><h1>write_letters.write module<a class="headerlink" href="#module-write_letters.write" title="Permalink to this headline"></a></h1>
+<p>Controls the motion of the franka robot to grab a paper and drop it.</p>
+<section id="parameters">
+<h2>Parameters<a class="headerlink" href="#parameters" title="Permalink to this headline"></a></h2>
+<blockquote>
+<div><p>move_group_name: The name of the move group.
+ee_frame_id: The name of the end-effector frame.
+fake_mode: If using the fake robot or not.</p>
+</div></blockquote>
+</section>
+<section id="services">
+<h2>Services<a class="headerlink" href="#services" title="Permalink to this headline"></a></h2>
+<blockquote>
+<div><p>load_path: Load the path for the robot to follow.
+calibrate: Make the robot arm to go to the calibration pose.
+homing: Make the robot and gripper to home pose.
+grab_pen: Let robot move to the desired pose and grab the pen there.
+change_writer_state: Change the state of the writer node to DONE.</p>
+</div></blockquote>
+</section>
+<section id="publishers">
+<h2>Publishers<a class="headerlink" href="#publishers" title="Permalink to this headline"></a></h2>
+<blockquote>
+<div><p>writer_state [String]: The state of the writer node.</p>
+</div></blockquote>
+</section>
+<section id="returns">
+<h2>Returns<a class="headerlink" href="#returns" title="Permalink to this headline"></a></h2>
+<blockquote>
+<div><p>None</p>
+</div></blockquote>
+<dl class="py class">
+<dt class="sig sig-object py" id="write_letters.write.State">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">write_letters.write.</span></span><span class="sig-name descname"><span class="pre">State</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#write_letters.write.State" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">enum.Enum</span></code></p>
+<p>Current state of the system.</p>
+<p>Determines what the main timer function should be doing on each iteration</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="write_letters.write.State.ADDBOX_BOARD">
+<span class="sig-name descname"><span class="pre">ADDBOX_BOARD</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">(&lt;enum.auto</span> <span class="pre">object&gt;,)</span></em><a class="headerlink" href="#write_letters.write.State.ADDBOX_BOARD" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="write_letters.write.State.ADDBOX_ROD">
+<span class="sig-name descname"><span class="pre">ADDBOX_ROD</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">(&lt;enum.auto</span> <span class="pre">object&gt;,)</span></em><a class="headerlink" href="#write_letters.write.State.ADDBOX_ROD" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="write_letters.write.State.ADDBOX_TABLE">
+<span class="sig-name descname"><span class="pre">ADDBOX_TABLE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">(&lt;enum.auto</span> <span class="pre">object&gt;,)</span></em><a class="headerlink" href="#write_letters.write.State.ADDBOX_TABLE" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="write_letters.write.State.DONE">
+<span class="sig-name descname"><span class="pre">DONE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">1</span></em><a class="headerlink" href="#write_letters.write.State.DONE" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="write_letters.write.State.DONEWRITING">
+<span class="sig-name descname"><span class="pre">DONEWRITING</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">(&lt;enum.auto</span> <span class="pre">object&gt;,)</span></em><a class="headerlink" href="#write_letters.write.State.DONEWRITING" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="write_letters.write.State.GOINGBACK">
+<span class="sig-name descname"><span class="pre">GOINGBACK</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">(&lt;enum.auto</span> <span class="pre">object&gt;,)</span></em><a class="headerlink" href="#write_letters.write.State.GOINGBACK" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="write_letters.write.State.GRABING">
+<span class="sig-name descname"><span class="pre">GRABING</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">(&lt;enum.auto</span> <span class="pre">object&gt;,)</span></em><a class="headerlink" href="#write_letters.write.State.GRABING" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="write_letters.write.State.GRASP">
+<span class="sig-name descname"><span class="pre">GRASP</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">(&lt;enum.auto</span> <span class="pre">object&gt;,)</span></em><a class="headerlink" href="#write_letters.write.State.GRASP" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="write_letters.write.State.HOMING">
+<span class="sig-name descname"><span class="pre">HOMING</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">(&lt;enum.auto</span> <span class="pre">object&gt;,)</span></em><a class="headerlink" href="#write_letters.write.State.HOMING" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="write_letters.write.State.MOVEARM">
+<span class="sig-name descname"><span class="pre">MOVEARM</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">(&lt;enum.auto</span> <span class="pre">object&gt;,)</span></em><a class="headerlink" href="#write_letters.write.State.MOVEARM" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="write_letters.write.State.PUTTINGBACK">
+<span class="sig-name descname"><span class="pre">PUTTINGBACK</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">(&lt;enum.auto</span> <span class="pre">object&gt;,)</span></em><a class="headerlink" href="#write_letters.write.State.PUTTINGBACK" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="write_letters.write.State.REACHING">
+<span class="sig-name descname"><span class="pre">REACHING</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">(&lt;enum.auto</span> <span class="pre">object&gt;,)</span></em><a class="headerlink" href="#write_letters.write.State.REACHING" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="write_letters.write.State.REMOVEBOX">
+<span class="sig-name descname"><span class="pre">REMOVEBOX</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">(&lt;enum.auto</span> <span class="pre">object&gt;,)</span></em><a class="headerlink" href="#write_letters.write.State.REMOVEBOX" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="write_letters.write.Writer">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">write_letters.write.</span></span><span class="sig-name descname"><span class="pre">Writer</span></span><a class="headerlink" href="#write_letters.write.Writer" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">rclpy.node.Node</span></code></p>
+<p>Controlling the robot to move and write the letter requested and drop it.</p>
+<blockquote>
+<div><p>Node (rclpy.node.Node): Super class of the writer node.</p>
+</div></blockquote>
+<blockquote>
+<div><p>comm_count (int): Counter for how many commands sent to the robot.
+state (writer.State): The state of the writer Node.
+grasp_called (bool): Whether the grasp action has been called.
+points (list[Point]): The list of points to go to.
+quats (list[Quaternion]): The list of quaternions to go to.
+poses (list[Pose]): The list of points to go to.
+poses_reaching (list[Pose]): The list of poses to go during reaching.
+poses_grabing (list[Pose]): The list of poses to go during grabing.
+poses_putback (list[Pose]): The list of poses to go during the putting back.
+poses_goback (list[Pose]): The list of poses to go during the putting back.
+calibrate (bool): Whether do the calibration.
+do_homing (bool): Whether do the homing process.
+do_grabing (bool): Whether grab the pen.
+do_reaching (bool): Whether reach the pen.
+do_goback (bool): Whether go back after reaching.
+home_pose (Pose): The home pose.</p>
+</div></blockquote>
+<dl class="py method">
+<dt class="sig sig-object py" id="write_letters.write.Writer.srv_calibrate_callback">
+<span class="sig-name descname"><span class="pre">srv_calibrate_callback</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">response</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#write_letters.write.Writer.srv_calibrate_callback" title="Permalink to this definition"></a></dt>
+<dd><p>Calibrate the camera to get position of apriltags.</p>
+<blockquote>
+<div><p>request (Empty_Request): Request object for calibrate service.
+response (Empty_Response): Response object for the calibrate service.</p>
+</div></blockquote>
+<blockquote>
+<div><p>Empty_Response: Response object for the calibrate service.</p>
+</div></blockquote>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="write_letters.write.Writer.srv_grab_callback">
+<span class="sig-name descname"><span class="pre">srv_grab_callback</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">response</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#write_letters.write.Writer.srv_grab_callback" title="Permalink to this definition"></a></dt>
+<dd><p>Grab a pen from the pen case.</p>
+<blockquote>
+<div><p>request (GrabPen_Request): Request of the grab_pen service.
+response (GrabPen_Response): Response of the grab_pen service.</p>
+</div></blockquote>
+<blockquote>
+<div><p>GrabPen_Response: Response of the grab_pen service.</p>
+</div></blockquote>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="write_letters.write.Writer.srv_homing_callback">
+<span class="sig-name descname"><span class="pre">srv_homing_callback</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">response</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#write_letters.write.Writer.srv_homing_callback" title="Permalink to this definition"></a></dt>
+<dd><p>Send the command to robot back to home pose.</p>
+<blockquote>
+<div><p>request (Empty_Request): Request of the homing service.
+response (Empty_Response): Response of the homing service.</p>
+</div></blockquote>
+<blockquote>
+<div><p>Empty_Response: Response of the hominmg service.</p>
+</div></blockquote>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="write_letters.write.Writer.srv_path_callback">
+<span class="sig-name descname"><span class="pre">srv_path_callback</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">response</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#write_letters.write.Writer.srv_path_callback" title="Permalink to this definition"></a></dt>
+<dd><p>Store the path from load_path service.</p>
+<blockquote>
+<div><p>request (Path_Request): Request object from the load_path service.
+response (Path_Response): Response object of the load_path service.</p>
+</div></blockquote>
+<blockquote>
+<div><p>Path_Response: Response to the load_path service.</p>
+</div></blockquote>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="write_letters.write.Writer.srv_put_back_callback">
+<span class="sig-name descname"><span class="pre">srv_put_back_callback</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">response</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#write_letters.write.Writer.srv_put_back_callback" title="Permalink to this definition"></a></dt>
+<dd><p>Put the pen back to the pen case.</p>
+<blockquote>
+<div><p>request (Trigger_Request): Resquest of the put_back service
+response (Trigger_Response): Response of the put_back service</p>
+</div></blockquote>
+<blockquote>
+<div><p>Trigger_Response: Response of the put_back service.</p>
+</div></blockquote>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="write_letters.write.Writer.srv_state_callback">
+<span class="sig-name descname"><span class="pre">srv_state_callback</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">response</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#write_letters.write.Writer.srv_state_callback" title="Permalink to this definition"></a></dt>
+<dd><p>Change the state of the write node to be done.</p>
+<blockquote>
+<div><p>request (Empty_Request): Request of the change_writer_state service.
+response (Empty_response): Response of the change_writer_state service.</p>
+</div></blockquote>
+<blockquote>
+<div><p>Empty_Response: Response of the service callMain function of the parser node.</p>
+</div></blockquote>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="write_letters.write.Writer.timer_callback">
+<span class="sig-name descname"><span class="pre">timer_callback</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#write_letters.write.Writer.timer_callback" title="Permalink to this definition"></a></dt>
+<dd><p>Timer callback function of the writer node.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="write_letters.write.main">
+<span class="sig-prename descclassname"><span class="pre">write_letters.write.</span></span><span class="sig-name descname"><span class="pre">main</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">args</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#write_letters.write.main" title="Permalink to this definition"></a></dt>
+<dd><p>Start of the node.</p>
+<blockquote>
+<div><p>args (list[str], optional): Arguments passed to the ros. Defaults to None.</p>
+</div></blockquote>
+</dd></dl>
+
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="write_letters.vec_parser.html" class="btn btn-neutral float-left" title="write_letters.vec_parser module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2021, MIT.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -1,0 +1,15 @@
+Welcome to the documentation for read_whiteboard
+================================================
+
+.. toctree::
+   :maxdepth: 2
+
+   read_whiteboard <modules>
+
+
+Indices and Search
+==================
+
+* :ref:`genindex`
+* :ref:`search`
+

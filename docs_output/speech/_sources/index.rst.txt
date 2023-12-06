@@ -1,0 +1,15 @@
+Welcome to the documentation for speech
+=======================================
+
+.. toctree::
+   :maxdepth: 2
+
+   speech <modules>
+
+
+Indices and Search
+==================
+
+* :ref:`genindex`
+* :ref:`search`
+

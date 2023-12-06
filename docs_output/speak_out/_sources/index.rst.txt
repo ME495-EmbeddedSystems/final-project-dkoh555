@@ -1,0 +1,15 @@
+Welcome to the documentation for speak_out
+==========================================
+
+.. toctree::
+   :maxdepth: 2
+
+   speak_out <modules>
+
+
+Indices and Search
+==================
+
+* :ref:`genindex`
+* :ref:`search`
+

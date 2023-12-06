@@ -1,0 +1,18 @@
+string2waypoints package
+========================
+
+Submodules
+----------
+
+.. toctree::
+   :maxdepth: 4
+
+   string2waypoints.string2waypoint_node
+
+Module contents
+---------------
+
+.. automodule:: string2waypoints
+   :members:
+   :undoc-members:
+   :show-inheritance:

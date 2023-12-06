@@ -1,0 +1,20 @@
+write\_letters package
+======================
+
+Submodules
+----------
+
+.. toctree::
+   :maxdepth: 4
+
+   write_letters.send_letter
+   write_letters.vec_parser
+   write_letters.write
+
+Module contents
+---------------
+
+.. automodule:: write_letters
+   :members:
+   :undoc-members:
+   :show-inheritance:

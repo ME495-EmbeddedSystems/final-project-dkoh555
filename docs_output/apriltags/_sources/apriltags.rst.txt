@@ -1,0 +1,20 @@
+apriltags package
+=================
+
+Submodules
+----------
+
+.. toctree::
+   :maxdepth: 4
+
+   apriltags.get_apriltags
+   apriltags.move_robot
+   apriltags.our_node
+
+Module contents
+---------------
+
+.. automodule:: apriltags
+   :members:
+   :undoc-members:
+   :show-inheritance:

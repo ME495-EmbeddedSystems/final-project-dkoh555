@@ -1,0 +1,7 @@
+polyglotbot
+===========
+
+.. toctree::
+   :maxdepth: 4
+
+   polyglotbot
