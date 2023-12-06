@@ -13,4 +13,4 @@ To launch this Node package run the following:
 To get the waypoints from a desired string, call 
 `ros2 service call /`....
 
-The waypoints will outpoint as a list of point messages. 
+The waypoints will output as a list of point messages. 
